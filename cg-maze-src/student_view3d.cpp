@@ -65,11 +65,6 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-//    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
-//    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
-//    glLightfv(GL_LIGHT1, GL_POSITION,LightPosition);
-//    glEnable(GL_LIGHT1);
-
     glFrontFace( GL_CCW );
 //    glCullFace( GL_BACK );
 //    glEnable(GL_CULL_FACE);
@@ -99,10 +94,13 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 void View3D::resize( int view_width, int view_height )
 {
 
-            height = height?height:1;
+            if( view_width  < 1 )  view_width  = 1;
+            if( view_height < 1 )  view_height = 1;
 
-            glViewport( 0, 0, 150, 150 );
-            //glViewport( 0, 0, (GLint)width, (GLint)height );
+            glViewport( 0, 0, view_width, view_height );
+
+//            glViewport( 0, 0, 150, 150 );
+//            //glViewport( 0, 0, (GLint)width, (GLint)height );
 
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
@@ -152,6 +150,66 @@ void View3D::paint( float x, float y, float compass_direction )
 
     //guarda a cell no array;
     mapStore[x][y]=c;
+
+
+}
+
+
+/* para pintar uma parede
+    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
+                a textura que vai aplicar
+
+    vai fazer um cubo, apenas as laterais, com os pontos em CCW, usando a textura com o index recebido
+
+*/
+void View3D::paintParede(int x, int z, GLuint textura)
+{
+
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    glLoadIdentity();
+    //será preciso????
+
+    int y = 0; //apenas para se quizermos alterar a "altura"
+
+    glBindTexture(GL_TEXTURE_2D, texturas[textura]);
+
+    glBegin(GL_QUADS);
+
+    //frente
+    glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
+
+
+    //lado direito
+    glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+
+
+    //fundo
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
+
+
+    //lado esquerdo
+    glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
+    glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
+
+
+
+    glEnd();
+
+
+}
+
+
 
 
 }

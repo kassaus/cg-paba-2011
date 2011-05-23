@@ -82,9 +82,8 @@ void ViewMap::paint()
     o paint com argumentos tem de guardar o que já foi feito
     guardar matriz
                 x, y, cell
-
-
 */
+
     int x;
     int y;
 
@@ -153,6 +152,12 @@ void ViewMap::paint( int x, int y, Cell c )
 
 
 }
+
+
+
+
+
+
 
 
 /* Limpar a area de desenho do mapa.
