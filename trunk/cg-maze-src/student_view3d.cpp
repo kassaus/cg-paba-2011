@@ -25,6 +25,8 @@ Computer Graphics Maze.
 #include "map.h"
 #include "compass.h"
 
+#include "student_viewmap.h"
+
 
 /* Construtor
    Atencao que "map" pode ser NULL!
@@ -40,6 +42,9 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
         return;
     }
 
+
+
+
     // Inicializar OpenGL
 
     GLuint texturas[VIEW3D_TEXTURES_NUMBER];
@@ -52,7 +57,6 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);  //verificar se são as melhores
         gluBuild2DMipmaps(GL_TEXTURE_2D, 3, textures[i].width(), textures[i].height(), GL_RGBA, GL_UNSIGNED_BYTE, textures[i].bits());
     }
-
 
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
@@ -106,7 +110,7 @@ void View3D::resize( int view_width, int view_height )
             glLoadIdentity();
 
             //gluOrtho2D( -5 , 5, -5 , 5 );
-            gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+            gluPerspective(45.0f,(GLfloat)view_width/(GLfloat)view_height,0.1f,100.0f);
 
             glMatrixMode(GL_MODELVIEW);
             glLoadIdentity();
@@ -116,6 +120,7 @@ void View3D::resize( int view_width, int view_height )
 }
 
 
+
 /* Desenha a vista com centro em x,y e orientacao compass_direction
    (que podem ser todos numeros reais para animacao de movimento).
    Atencao que "this->map" pode ser NULL!
@@ -123,33 +128,56 @@ void View3D::resize( int view_width, int view_height )
 void View3D::paint( float x, float y, float compass_direction )
 {
 
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* vai "pintar" cada célula do mapa com o "cubo" certo
+   recebe   a posição x e z
+
+   vai chamar as funções dependendo do tipo de célula
+
+*/
+void View3D::paint( float x, float z)
+{
+
+
+    Cell c = mapStore[(int)x][(int)z];
 
     //para pintar as texturas certas
-    if(c.isWall())
-        glColor3ub( VIEWMAP_COLOR_3UB_WALL );
 
-    if(c.isFloor())
-        glColor3ub( VIEWMAP_COLOR_3UB_FLOOR );
-
-    if(c.players !=0)
-        glColor3ub( VIEWMAP_COLOR_3UB_PLAYER1 );
-
-
-    glBegin(GL_QUADS);
-        glVertex3f( x, y, 0.0f);
-        glVertex3f( x+1, y, 0.0f);
-        glVertex3f( x+1, y+1, 0.0f);
-        glVertex3f( x, y+1, 0.0f);
-    glEnd();
+    if(c.isWall()){
+        paintParede(x, z, VIEW3D_IX_TEXTURE_WALL);
+    }
+    else if(c.isFloor()){
+        paintParede(x, z, VIEW3D_IX_TEXTURE_FLOOR);
+    }
 
 
     if (doFlush)
         glFlush();
-
-    //guarda a cell no array;
-    mapStore[x][y]=c;
 
 
 }
@@ -169,7 +197,7 @@ void View3D::paintParede(int x, int z, GLuint textura)
 //    glLoadIdentity();
     //será preciso????
 
-    int y = 0; //apenas para se quizermos alterar a "altura"
+    int y = 0; //apenas se quizermos alterar a "altura"
 
     glBindTexture(GL_TEXTURE_2D, texturas[textura]);
 
@@ -184,13 +212,13 @@ void View3D::paintParede(int x, int z, GLuint textura)
 
     //lado direito
     glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
-    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
     glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
     glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
 
 
     //fundo
-    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
     glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
     glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
     glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
@@ -202,8 +230,6 @@ void View3D::paintParede(int x, int z, GLuint textura)
     glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
     glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
 
-
-
     glEnd();
 
 
@@ -211,5 +237,42 @@ void View3D::paintParede(int x, int z, GLuint textura)
 
 
 
+/* para pintar chão
+    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
+                a textura que vai aplicar
+
+    vai fazer apenas o chão e tecto, com os pontos em CCW, usando a textura com o index recebido
+
+*/
+void View3D::paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima)
+{
+
+
+    int y = 0; //apenas se quizermos alterar a "altura"
+
+
+    //baixo
+    glBindTexture(GL_TEXTURE_2D, texturas[texturaBaixo]);
+
+    glBegin(GL_QUADS);
+    glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
+    glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
+    glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glEnd();
+
+    //cima
+    glBindTexture(GL_TEXTURE_2D, texturas[texturaCima]);
+
+    glBegin(GL_QUADS);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+    glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
+    glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
+    glEnd();
+
 
 }
+
+
+
