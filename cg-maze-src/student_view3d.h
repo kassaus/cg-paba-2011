@@ -45,6 +45,10 @@ private:
     GLuint id_textures[ VIEW3D_TEXTURES_NUMBER ];
 
 public:
+
+//    bool doFlush ;   //para não fazer flush sem razão no paint
+
+
     View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] );
     // Atencao que "map" pode ser NULL!
     // Para as funcoes OpenGL glTexImage2D() ou gluBuild2DMipmaps(), acedemos
@@ -53,6 +57,12 @@ public:
 
     void resize( int view_width, int view_height );
     void paint( float x, float y, float compass_direction );
+
+
+    void paint( float x, float z);
+    void paintParede(int x, int z, GLuint textura);
+    void paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima);
+
 };
 
 

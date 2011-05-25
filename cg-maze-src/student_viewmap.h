@@ -36,10 +36,14 @@ private:
     int map_width;
     int map_height;
 
+//    Cell mapStore[1000][1000]; //para guardar o mapa
+//    bool doFlush ;   //para não fazer flush sem razão no paint
+
+public:
+
     Cell mapStore[1000][1000]; //para guardar o mapa
     bool doFlush ;   //para não fazer flush sem razão no paint
 
-public:
     ViewMap( int map_width, int map_height );
     void resize( int view_width, int view_height );
     void clear();
