@@ -15,7 +15,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Novo labirinto</string>
+   <string>LOOM - Novo labirinto</string>
   </property>
   <property name="modal">
    <bool>true</bool>
