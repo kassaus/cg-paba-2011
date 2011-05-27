@@ -44,6 +44,8 @@ private:
     Map *map;
     GLuint id_textures[ VIEW3D_TEXTURES_NUMBER ];
 
+        GLuint texturas[VIEW3D_TEXTURES_NUMBER];
+
 public:
 
 //    bool doFlush ;   //para não fazer flush sem razão no paint
