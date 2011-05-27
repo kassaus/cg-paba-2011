@@ -43,6 +43,8 @@ struct Cell
     int object;
     unsigned int players;
 
+
+
     /*para tentarmos gravar o sítio actual do jogador
      *  true se o jogador se encontrar na célula
      *  false se não está

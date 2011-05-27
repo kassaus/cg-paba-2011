@@ -132,6 +132,8 @@ void Map::setPlayer( int x, int y, unsigned int player )
 }
 
 
+
+
 /* Actualiza as coordenadas para avancar uma posicao na direccao pretendida
    em "c". Nao verifica se as coordenadas ficam dentro do labirinto ou nao!
 */
