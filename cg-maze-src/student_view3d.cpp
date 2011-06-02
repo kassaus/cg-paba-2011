@@ -128,7 +128,11 @@ void View3D::paint( float x, float y, float compass_direction )
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    gluLookAt( x, .5, y , 0, 0, 1, 0, 1, 0 );
+
+
+    float xdir;
+
+    gluLookAt( x +.5, .5, y+.5 , 0, 0, 1, 0, 1, 0 );
 
 
 
@@ -238,13 +242,12 @@ void View3D::paintParede(int x, int z, GLuint textura)
 
     int y = 0; //apenas se quizermos alterar a "altura"
 
+
     /*
         em princípio, z ficará ao "contrário"
         deverá ser necessário colocar
 
         z = -z;
-
-
 
         será necessário colocar as normais, ou apenas para iluminação?
     */
@@ -374,7 +377,7 @@ void View3D::paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima)
         glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
 
         glTexCoord2f(1.0f, 0.0f);
-        glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
+        glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
 
         glTexCoord2f(1.0f, 1.0f);
         glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
