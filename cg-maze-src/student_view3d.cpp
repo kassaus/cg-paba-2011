@@ -127,6 +127,112 @@ void View3D::resize( int view_width, int view_height )
 void View3D::paint( float x, float y, float compass_direction )
 {
 
+
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    gluLookAt( x, .5, y , 0, 0, 1, 0, 1, 0 );
+
+
+
+////    glColor3ub(128,128, 128);
+
+//    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CEILING]);
+
+//    glBegin(GL_QUADS);
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  1.0f, 0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  1.0f,  1.0f,  0.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  0.0f);
+
+
+////lado direito
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f, 0.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f,  1.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  1.0f, 1.0f,  1.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f( 1.0f,  1.0f,  0.0f);
+
+
+////fundo
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f, 1.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f( 0.0f,  0.0f,  1.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  0.0f, 1.0f,  1.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  1.0f,  1.0f,  1.0f);
+
+
+////lado esquerdo
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f, 1.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  0.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  1.0f);
+
+//  glEnd();
+
+
+
+
+
+    Cell c;
+
+    int mx, my;
+    for( my = 0; my < map->getHeight(); my++ )
+        for( mx = 0; mx < map->getWidth(); mx++ )
+        {
+            c = map->getCell( mx, my );
+
+
+            if(c.isWall()){
+                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+            }
+            else if(c.isFloor()){
+                paintChao(mx, my, id_textures[VIEW3D_IX_TEXTURE_FLOOR], id_textures[VIEW3D_IX_TEXTURE_CEILING]);
+            }
+            else if(c.isDoor()){
+                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+            }
+             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
+            else {
+                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+            }
+    }
+
+
+
+
+
 }
 
 
