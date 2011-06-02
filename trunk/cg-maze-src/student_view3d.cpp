@@ -44,14 +44,9 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
 
-
     // Inicializar OpenGL
 
-//    GLuint texturas[VIEW3D_TEXTURES_NUMBER];
-
-
     glGenTextures(VIEW3D_TEXTURES_NUMBER, id_textures);
-
 
     for (int i=0; i<VIEW3D_TEXTURES_NUMBER ; i++ ){
         glBindTexture( GL_TEXTURE_2D, id_textures[i] );
@@ -72,6 +67,7 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     glFrontFace( GL_CCW );
+
 //    glCullFace( GL_BACK );
 //    glEnable(GL_CULL_FACE);
 //ligar depois, apenas para testar se funciona!
@@ -136,71 +132,6 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
 
-////    glColor3ub(128,128, 128);
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CEILING]);
-
-//    glBegin(GL_QUADS);
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  1.0f, 0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  1.0f,  1.0f,  0.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  0.0f);
-
-
-////lado direito
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f, 0.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f,  1.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  1.0f, 1.0f,  1.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f( 1.0f,  1.0f,  0.0f);
-
-
-////fundo
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f, 1.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f( 0.0f,  0.0f,  1.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  0.0f, 1.0f,  1.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  1.0f,  1.0f,  1.0f);
-
-
-////lado esquerdo
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f, 1.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  0.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  1.0f);
-
-//  glEnd();
-
 
 
 
@@ -215,18 +146,42 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
             if(c.isWall()){
-                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
             }
             else if(c.isFloor()){
-                paintChao(mx, my, id_textures[VIEW3D_IX_TEXTURE_FLOOR], id_textures[VIEW3D_IX_TEXTURE_CEILING]);
+                paintChao(mx, my, VIEW3D_IX_TEXTURE_FLOOR, VIEW3D_IX_TEXTURE_CEILING);
             }
             else if(c.isDoor()){
-                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
             }
              //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
             else {
-                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
             }
+
+
+
+
+
+
+
+
+
+
+
+//            if(c.isWall()){
+//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+//            }
+//            else if(c.isFloor()){
+//                paintChao(mx, my, id_textures[VIEW3D_IX_TEXTURE_FLOOR], id_textures[VIEW3D_IX_TEXTURE_CEILING]);
+//            }
+//            else if(c.isDoor()){
+//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+//            }
+//             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
+//            else {
+//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
+//            }
     }
 
 
@@ -250,42 +205,6 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
 
-
-
-
-
-
-
-
-
-
-///* vai "pintar" cada célula do mapa com o "cubo" certo
-//   recebe   a posição x e z
-
-//   vai chamar as funções dependendo do tipo de célula
-
-//*/
-//void View3D::paint( float x, float z)
-//{
-
-
-//    Cell c = mapStore[(int)x][(int)z];
-
-//    //para pintar as texturas certas
-
-//    if(c.isWall()){
-//        paintParede(x, z, VIEW3D_IX_TEXTURE_WALL);
-//    }
-//    else if(c.isFloor()){
-//        paintParede(x, z, VIEW3D_IX_TEXTURE_FLOOR);
-//    }
-
-
-////    if (doFlush)
-////        glFlush();
-
-
-//}
 
 
 
@@ -473,3 +392,85 @@ void View3D::paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//para testar, cubo sem topo e fundo, com textura
+////    glColor3ub(128,128, 128);
+
+//    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CEILING]);
+
+//    glBegin(GL_QUADS);
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  1.0f, 0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  1.0f,  1.0f,  0.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  0.0f);
+
+
+////lado direito
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f, 0.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f,  1.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  1.0f, 1.0f,  1.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f( 1.0f,  1.0f,  0.0f);
+
+
+////fundo
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  1.0f,  0.0f, 1.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f( 0.0f,  0.0f,  1.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  0.0f, 1.0f,  1.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  1.0f,  1.0f,  1.0f);
+
+
+////lado esquerdo
+
+//    glTexCoord2f(0.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f, 1.0f);
+
+//    glTexCoord2f(1.0f, 0.0f);
+//    glVertex3f(  0.0f,  0.0f,  0.0f);
+
+//    glTexCoord2f(1.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  0.0f);
+
+//    glTexCoord2f(0.0f, 1.0f);
+//    glVertex3f(  0.0f,  1.0f,  1.0f);
+
+//  glEnd();

@@ -62,7 +62,6 @@ public:
     void paint( float x, float y, float compass_direction );
 
 
-    void paint( float x, float z);
     void paintParede(int x, int z, GLuint textura);
     void paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima);
 
