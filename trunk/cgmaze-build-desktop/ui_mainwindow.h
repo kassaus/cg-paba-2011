@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 27. May 18:22:08 2011
+** Created: Sun 29. May 15:21:39 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -430,18 +430,19 @@ public:
                         "n-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">\302\251 2010 Pedro Freire</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.pedrofreire.com/\"><span style=\" font-size:8pt; color:#0000ff;\">www.pedrofreire.com</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.pedrofreire.com/\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">www.pedrofreire.com</span></a></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0"
-                        "px;\"><a href=\"http://creativecommons.org/licenses/by-nc-sa/2.5/pt/\"><img src=\":/mainwindow/imgs/mainwindow.icon.cc.png\" /></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-b"
+                        "lock-indent:0; text-indent:0px;\"><a href=\"http://creativecommons.org/licenses/by-nc-sa/2.5/pt/\"><img src=\":/mainwindow/imgs/mainwindow.icon.cc.png\" /></a></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Este software \303\251 gratuito </span><span style=\" font-size:8pt; font-weight:600;\">desde que</span><span style=\" font-size:8pt;\"><br />mantenha esta mensagem de direito de autor.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">\302\240</span> </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-f"
-                        "amily:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Ant\303\263nio Louren\303\247o a20091565</span> </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Paulo Lu\303\255s a20095165 ???</span> </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Bruno Machado</span> </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Alexandre Palma</span> </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">\302\240</span><span style=\" font-size:8pt;\"> </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
+                        "t:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Ant\303\263nio Louren\303\247o a20091565</span><span style=\" font-size:8pt;\"> </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Paulo Lu\303\255s a20095165 ???</span><span style=\" font-size:8pt;\"> </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Bruno Machado</span><span style=\" font-size:8pt;\"> </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Alexandre Palma</span><span style=\" font-size:8pt;\"> a20090894</span><"
+                        "/p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         tabSet->setTabText(tabSet->indexOf(tabAbout), QApplication::translate("MainWindow", "&Autoria", 0, QApplication::UnicodeUTF8));
         tabSet->setTabToolTip(tabSet->indexOf(tabAbout), QApplication::translate("MainWindow", "Autoria do jogo", 0, QApplication::UnicodeUTF8));
