@@ -131,15 +131,15 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
 
-    //melhorar esta cena!!!!!!!!!
-    float angulo= ( (compass_direction * 90.0f) ) + 270.0f;
+    //
+    float angulo= ( 270.0f - (compass_direction * 90.0f) );
 
     float xview = cos(angulo);
-    float zview = sin(angulo);
+    float zview = -sin(angulo);
 
 
 
-    gluLookAt( x +.5, .5, y+.5 , 1000*xview , 0, 1000*zview, 0, 1, 0 );
+    gluLookAt( x + 0.5f, 0.5f, y + 0.5f , 0 , 0, 1000, 0, 1, 0 );
 
 
 
