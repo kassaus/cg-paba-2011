@@ -167,7 +167,12 @@ void walls( Map *map, int complexity )
 */
 void features( Map *map )
 {
-    // Por enquanto nao faz nada
+
+
+
+
+
+
 }
 
 }

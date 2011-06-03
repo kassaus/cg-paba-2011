@@ -131,34 +131,28 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
 
-//     para testar... não funciona assim!
-    float angulo= ((compass_direction * 90.0f *piover180) );
 
-    float xview = cos(angulo);
-    float zview = -sin(angulo);
-    float yview = -sin(angulo);
-
-    gluLookAt( x + 0.5f, y+0.5f, 0.5f , xview , yview, 0, 0, 0, 1 );
+    /* passar o compass_direction para um angulo em Radianos
+            passar o compass_direction para um angulo em relação ao eixo x
+            transformá-lo em radianos
+    */
+    float anguloRad = (270.0f - (90.0f * compass_direction))  / 180.0f * 3.141592654;
 
 
-//    float angle = compass_direction;
-//        float lookAtX = float(x - sin(angle*piover180*90.0f));
-//        float lookAtY = 0.0f;
-//        float lookAtZ = float(-y + cos(angle*piover180*90.0f));
-//        //Para onde o jogador está a olhar
-//        gluLookAt ( x, 0.0f, -y, lookAtX, lookAtY, lookAtZ,  0.0f, 1.0f, 0.0f);
+    /* para cada eixo, calcular o incremento em relação ao ângulo
+    */
+    float xview = cos(anguloRad);
+    float yview = sin(anguloRad);
 
+    /* colocar e apontar a câmara
+            colocá-la no meio do cubo x,y,z
+            apontá-la para o ponto de visualização consoante o compasso
+            definir "cima" o eixo posivo z
 
-//        float angle = compass_direction;
-//        float lookAtX = float(x - sin(angle*piover180*90.0f));
-//        float lookAtZ = 0.0f;
-//        float lookAtY = float(-y + cos(angle*piover180*90.0f));
-//        //Para onde o jogador está a olhar
-//        gluLookAt ( x+.05f, y+.05f, .05f, lookAtX, lookAtY, lookAtZ,  0.0f, 0.0f, 1.0f);
-
-
-
-
+    */
+    gluLookAt( x+0.5f, y+0.5f, 0.5f ,                                               //meio do cubo x,y,z
+               x + 0.5f + (xview * 0.5f) , y + 0.5f + (yview * 0.5f)  , 0.5f ,      //ponto do cubo onde apontamos a câmara
+               0, 0, 1 );                                                           //
 
 
 
