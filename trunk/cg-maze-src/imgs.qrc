@@ -11,5 +11,6 @@
         <file>mainwindow.texture.ceiling.png</file>
         <file>mainwindow.texture.floor.png</file>
         <file>mainwindow.texture.wallP1.png</file>
+        <file>mainwindow.texture.floorChave.png</file>
     </qresource>
 </RCC>

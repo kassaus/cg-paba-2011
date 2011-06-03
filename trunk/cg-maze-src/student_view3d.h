@@ -35,22 +35,24 @@ Computer Graphics Maze.
 
 
 
-#define VIEW3D_IX_TEXTURE_CARAPAULO     1
-#define VIEW3D_IX_TEXTURE_CARAANTONIO   6
+#define VIEW3D_IX_TEXTURE_CARAPAULO     12
+#define VIEW3D_IX_TEXTURE_CARAANTONIO   13
 #define VIEW3D_IX_TEXTURE_CARAALEX      7
 #define VIEW3D_IX_TEXTURE_CARABRUNO     8
 #define VIEW3D_IX_TEXTURE_CARAPEDRO     9
-#define VIEW3D_IX_TEXTURE_CHAVE         10
+
 #define VIEW3D_IX_TEXTURE_PORTA         11
 
 
 #define VIEW3D_IX_TEXTURE_PAREDERISCADA 5
+#define VIEW3D_IX_TEXTURE_CHAVE         6
+
 
 //adicionar depois as novas texturas
 
 
 //para já, apenas 6, originalmente 5
-#define VIEW3D_TEXTURES_NUMBER         6
+#define VIEW3D_TEXTURES_NUMBER         7
 
 
 

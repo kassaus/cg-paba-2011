@@ -179,8 +179,9 @@ void features( Map *map )
     int mapWidth = map->getWidth();
 
 
-    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
 
+
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
     do{
 
         py = rand() %mapHeight ;
@@ -195,8 +196,27 @@ void features( Map *map )
             numParedesPintadas--;
         }
 
-
     } while ( numParedesPintadas>0);
+
+
+
+
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+
+        c = map->getCell(px,py);
+
+        if (c.isFloor() && !c.hasObject() ){
+
+            c.object = 6;   //chao com chave
+            map->setCell(px, py, c);
+            numChaves--;
+        }
+
+    } while ( numChaves>0);
 
 
 }
