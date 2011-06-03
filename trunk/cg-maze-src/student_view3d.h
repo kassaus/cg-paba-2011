@@ -44,6 +44,9 @@ private:
     Map *map;
     GLuint id_textures[ VIEW3D_TEXTURES_NUMBER ];
 
+
+    static const float piover180 = 0.0174532925f;
+
 //        GLuint texturas[VIEW3D_TEXTURES_NUMBER];
 
 public:
