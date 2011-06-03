@@ -134,6 +134,7 @@ void ViewMap::paint( int x, int y, Cell c )
         glColor3ub( VIEWMAP_COLOR_3UB_PLAYER1 );
 
 
+
     glBegin(GL_QUADS);
         glVertex3f( x, y, 0.0f);
         glVertex3f( x+1, y, 0.0f);

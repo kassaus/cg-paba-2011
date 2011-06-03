@@ -193,6 +193,7 @@ void features( Map *map )
 
             c.object = 5;   //parederiscada
             map->setCell(px, py, c);
+//            map->writeCell(px, py, c, false);
             numParedesPintadas--;
         }
 
@@ -213,6 +214,7 @@ void features( Map *map )
 
             c.object = 6;   //chao com chave
             map->setCell(px, py, c);
+//            map->writeCell(px, py, c, false);
             numChaves--;
         }
 
