@@ -172,7 +172,9 @@ void View3D::paint( float x, float y, float compass_direction )
             }
 
             else if(c.isFloor()){
-                paintChao(mx, my, VIEW3D_IX_TEXTURE_FLOOR, VIEW3D_IX_TEXTURE_CEILING);
+
+                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
+
             }
             else if(c.isDoor()){
                 paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);

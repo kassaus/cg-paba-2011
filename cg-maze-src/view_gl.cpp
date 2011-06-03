@@ -443,6 +443,12 @@ void View3DGL::initializeGL()
 
 
 
+    /*****************************************************************
+      texturas nossas
+
+
+    */
+
 
 
     // Prepara a imagem da textura DA PAREDE RISCADA
@@ -453,6 +459,14 @@ void View3DGL::initializeGL()
         }
     textures[VIEW3D_IX_TEXTURE_PAREDERISCADA] = QGLWidget::convertToGLFormat( img );
 
+
+    // Prepara a imagem da textura DO CHAO COM CHAVE
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.floorChave.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CHAVE] = QGLWidget::convertToGLFormat( img );
 
 
 
