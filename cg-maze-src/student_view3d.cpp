@@ -68,8 +68,8 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
     glFrontFace( GL_CCW );
 
-//    glCullFace( GL_BACK );
-//    glEnable(GL_CULL_FACE);
+    glCullFace( GL_BACK );
+    glEnable(GL_CULL_FACE);
 //ligar depois, apenas para testar se funciona!
 
 
@@ -166,8 +166,11 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
             if(c.isWall()){
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+
+                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
+
             }
+
             else if(c.isFloor()){
                 paintChao(mx, my, VIEW3D_IX_TEXTURE_FLOOR, VIEW3D_IX_TEXTURE_CEILING);
             }
@@ -175,33 +178,13 @@ void View3D::paint( float x, float y, float compass_direction )
                 paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
             }
              //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
+
+
+
             else {
                 paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
             }
 
-
-
-
-
-
-
-
-
-
-
-//            if(c.isWall()){
-//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
-//            }
-//            else if(c.isFloor()){
-//                paintChao(mx, my, id_textures[VIEW3D_IX_TEXTURE_FLOOR], id_textures[VIEW3D_IX_TEXTURE_CEILING]);
-//            }
-//            else if(c.isDoor()){
-//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
-//            }
-//             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-//            else {
-//                paintParede(mx, my, id_textures[VIEW3D_IX_TEXTURE_WALL]);
-//            }
     }
 
 
@@ -339,6 +322,9 @@ void View3D::paintParede(int x, int y, GLuint textura)
 
 
 
+
+
+
 /* para pintar chão
     recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
                 a textura que vai aplicar
@@ -353,12 +339,6 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
 
 
     int z = 0; //apenas se quizermos alterar a "altura"
-
-
-
-
-
-
 
     //cima, textura virada para baixo
 
@@ -404,444 +384,5 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
     glEnd();
 
 
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//para testar, cubo sem topo e fundo, com textura
-////    glColor3ub(128,128, 128);
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CEILING]);
-
-//    glBegin(GL_QUADS);
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  1.0f, 0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  1.0f,  1.0f,  0.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  0.0f);
-
-
-////lado direito
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f, 0.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f,  1.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  1.0f, 1.0f,  1.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f( 1.0f,  1.0f,  0.0f);
-
-
-////fundo
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  1.0f,  0.0f, 1.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f( 0.0f,  0.0f,  1.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  0.0f, 1.0f,  1.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  1.0f,  1.0f,  1.0f);
-
-
-////lado esquerdo
-
-//    glTexCoord2f(0.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f, 1.0f);
-
-//    glTexCoord2f(1.0f, 0.0f);
-//    glVertex3f(  0.0f,  0.0f,  0.0f);
-
-//    glTexCoord2f(1.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  0.0f);
-
-//    glTexCoord2f(0.0f, 1.0f);
-//    glVertex3f(  0.0f,  1.0f,  1.0f);
-
-//  glEnd();
-
-
-
-
-
-
-
-//código paintparede para xz com floats
-///* para pintar uma parede
-//    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
-//                a textura que vai aplicar
-
-//    vai fazer um cubo, apenas as laterais, com os pontos em CCW, usando a textura com o index recebido
-
-//*/
-//void View3D::paintParede(int x, int z, GLuint textura)
-//{
-
-////    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-////    glLoadIdentity();
-//    //será preciso????
-
-//    int y = 0; //apenas se quizermos alterar a "altura"
-
-
-//    /*
-//        em princípio, z ficará ao "contrário"
-//        deverá ser necessário colocar
-
-//        z = -z;
-
-//        será necessário colocar as normais, ou apenas para iluminação?
-//    */
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[textura]);
-
-//    glBegin(GL_QUADS);
-
-
-//    //frente
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
-
-
-//    //lado direito
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
-
-
-//    //fundo
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
-
-
-//    //lado esquerdo
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
-
-//    glEnd();
-
-
-////}
-///* para pintar chão
-//    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
-//                a textura que vai aplicar
-
-//    vai fazer apenas o chão e tecto, com os pontos em CCW, usando a textura com o index recebido
-
-//    neste caso, as texturas vão ficar para "dentro", tecto e chão
-
-//*/
-//void View3D::paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima)
-//{
-
-
-//    int y = 0; //apenas se quizermos alterar a "altura"
-
-
-
-
-
-
-
-//    //cima, textura virada para baixo
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[texturaCima]);
-
-//    glBegin(GL_QUADS);
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 1.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 1.0f, z + 0.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 1.0f, z + 0.0f);
-
-//    glEnd();
-
-
-
-
-//    //baixo, textura virada para cima
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[texturaBaixo]);
-
-//    glBegin(GL_QUADS);
-
-//        glTexCoord2f(0.0f, 0.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 0.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 0.0f);
-
-//        glTexCoord2f(1.0f, 1.0f);
-//        glVertex3f( x + 1.0f, y + 0.0f, z + 1.0f);
-
-//        glTexCoord2f(0.0f, 1.0f);
-//        glVertex3f( x + 0.0f, y + 0.0f, z + 1.0f);
-
-//    glEnd();
-
-
-
-
-
-//}
-
-
-
-
-
-
-
-
-
-
-/********************************************************************************************************
-código em xz a funcionar com ints
-
-*/
-
-/* para pintar uma parede
-    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
-                a textura que vai aplicar
-
-    vai fazer um cubo, apenas as laterais, com os pontos em CCW, usando a textura com o index recebido
-
-*/
-//void View3D::paintParede(int x, int z, GLuint textura)
-//{
-
-////    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-////    glLoadIdentity();
-//    //será preciso????
-
-//    int y = 0; //apenas se quizermos alterar a "altura"
-
-
-//    /*
-//        em princípio, z ficará ao "contrário"
-//        deverá ser necessário colocar
-
-//        z = -z;
-
-//        será necessário colocar as normais, ou apenas para iluminação?
-//    */
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[textura]);
-
-//    glBegin(GL_QUADS);
-
-
-//    //frente
-
-//        glTexCoord2i(0, 0);
-//        glVertex3i( x + 0, y + 0, z + 0);
-
-//        glTexCoord2i(1, 0);
-//        glVertex3i( x + 1, y + 0, z + 0);
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 1 , y + 1 , z + 0 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 0 , y + 1 , z + 0 );
-
-
-//    //lado direito
-
-//        glTexCoord2i(0 , 0 );
-//        glVertex3i( x + 1 , y + 0 , z + 0 );
-
-//        glTexCoord2i(1 , 0 );
-//        glVertex3i( x + 1 , y + 0 , z + 1 );
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 1 , y + 1 , z + 1 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 1 , y + 1 , z + 0 );
-
-
-//    //fundo
-
-//        glTexCoord2i(0 , 0 );
-//        glVertex3i( x + 1 , y + 0 , z + 1 );
-
-//        glTexCoord2i(1 , 0 );
-//        glVertex3i( x + 0 , y + 0 , z + 1 );
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 0 , y + 1 , z + 1 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 1 , y + 1 , z + 1 );
-
-
-//    //lado esquerdo
-
-//        glTexCoord2i(0 , 0 );
-//        glVertex3i( x + 0 , y + 0 , z + 1 );
-
-//        glTexCoord2i(1 , 0 );
-//        glVertex3i( x + 0 , y + 0 , z + 0 );
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 0 , y + 1 , z + 0 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 0 , y + 1 , z + 1 );
-
-//    glEnd();
-
-
-//}
-
-
-
-///* para pintar chão
-//    recebe      as coordenadas de onde vai partir, o x e o z (y é sempre entre 0 e 1)
-//                a textura que vai aplicar
-
-//    vai fazer apenas o chão e tecto, com os pontos em CCW, usando a textura com o index recebido
-
-//    neste caso, as texturas vão ficar para "dentro", tecto e chão
-
-//*/
-//void View3D::paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima)
-//{
-
-
-//    int y = 0; //apenas se quizermos alterar a "altura"
-
-
-
-
-
-
-
-//    //cima, textura virada para baixo
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[texturaCima]);
-
-//    glBegin(GL_QUADS);
-
-//        glTexCoord2i(0 , 0 );
-//        glVertex3i( x + 0 , y + 1 , z + 1 );
-
-//        glTexCoord2i(1 , 0 );
-//        glVertex3i( x + 1 , y + 1 , z + 1 );
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 1 , y + 1 , z + 0 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 0 , y + 1 , z + 0 );
-
-//    glEnd();
-
-
-
-
-//    //baixo, textura virada para cima
-
-//    glBindTexture(GL_TEXTURE_2D, id_textures[texturaBaixo]);
-
-//    glBegin(GL_QUADS);
-
-//        glTexCoord2i(0 , 0 );
-//        glVertex3i( x + 0 , y + 0 , z + 0 );
-
-//        glTexCoord2i(1 , 0 );
-//        glVertex3i( x + 1 , y + 0 , z + 0 );
-
-//        glTexCoord2i(1 , 1 );
-//        glVertex3i( x + 1 , y + 0 , z + 1 );
-
-//        glTexCoord2i(0 , 1 );
-//        glVertex3i( x + 0 , y + 0 , z + 1 );
-
-//    glEnd();
-
-
-
-
-
-//}

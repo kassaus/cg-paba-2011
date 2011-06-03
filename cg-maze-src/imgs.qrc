@@ -10,5 +10,6 @@
         <file>mainwindow.texture.wall.png</file>
         <file>mainwindow.texture.ceiling.png</file>
         <file>mainwindow.texture.floor.png</file>
+        <file>mainwindow.texture.wallP1.png</file>
     </qresource>
 </RCC>

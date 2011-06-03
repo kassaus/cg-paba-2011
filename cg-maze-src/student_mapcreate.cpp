@@ -168,9 +168,35 @@ void walls( Map *map, int complexity )
 void features( Map *map )
 {
 
+    int px, py;
+    int numPortas = 10;
+    int numChaves = 20;
+    int numParedesPintadas = 50;
+
+    Cell c;
+
+    int mapHeight = map->getHeight();
+    int mapWidth = map->getWidth();
 
 
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
 
+    do{
+
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+
+        c = map->getCell(px,py);
+
+        if (c.isWall() && !c.hasObject() ){
+
+            c.object = 5;   //parederiscada
+            map->setCell(px, py, c);
+            numParedesPintadas--;
+        }
+
+
+    } while ( numParedesPintadas>0);
 
 
 }

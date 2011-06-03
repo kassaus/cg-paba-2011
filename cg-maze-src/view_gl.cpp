@@ -439,6 +439,24 @@ void View3DGL::initializeGL()
 	}
     textures[VIEW3D_IX_TEXTURE_FLOOR] = QGLWidget::convertToGLFormat( img );
 
+
+
+
+
+
+
+    // Prepara a imagem da textura DA PAREDE RISCADA
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.wallP1.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_PAREDERISCADA] = QGLWidget::convertToGLFormat( img );
+
+
+
+
+
     view3d = new View3D( map, textures );
 
     if( view_width >= 0  &&  view_height >= 0 )
