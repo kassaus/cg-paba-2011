@@ -151,10 +151,71 @@ void View3D::paint( float x, float y, float compass_direction )
 
     Cell c;
     int mx, my;
+    int distanciaMax = 50;
 
-    for( my = 0; my < map->getHeight(); my++ )
-        for( mx = 0; mx < map->getWidth(); mx++ )
-        {
+    int minX, minY, maxX, maxY;
+
+    int xPosIni;
+    int xPosFin;
+
+    int yPosIni;
+    int yPosFin;
+
+
+
+    if ( (int)compass_direction ==0) {          //Sul
+        minX = x - distanciaMax;
+        maxX = x + 1;
+        minY = y - distanciaMax;
+        maxY = y + distanciaMax;
+
+
+    }
+    else if ((int)compass_direction ==1){       //Oeste
+        minX = x - distanciaMax;
+        maxX = x + distanciaMax;
+        minY = y - distanciaMax;
+        maxY = y + 1;
+
+
+
+    }
+    else if ((int)compass_direction ==2){       //Norte
+        minX = x - 1;
+        maxX = x + distanciaMax;
+        minY = y - distanciaMax;
+        maxY = y + distanciaMax;
+
+
+    }
+    else{                                       //Este
+        minX = x -1;
+        maxX = x + distanciaMax;
+        minY = y - distanciaMax;
+        maxY = y + distanciaMax;
+
+    }
+
+
+
+
+
+
+
+
+
+    //original, tentar mais certinho...
+//    for( my = 0; my < map->getHeight(); my++ )
+//        for( mx = 0; mx < map->getWidth(); mx++ )
+//        {
+
+
+        for( my = y - distanciaMax ; my < y + distanciaMax ; my++ )
+            for( mx = x - distanciaMax ; mx < x + distanciaMax ; mx++ )
+            {
+
+
+
             c = map->getCell( mx, my );
 
 
