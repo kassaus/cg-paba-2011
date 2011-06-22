@@ -86,6 +86,8 @@ public:
     void paintParede(int x, int z, GLuint textura);
     void paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima);
 
+   void paintIntervalos( float xMin, float yMin, float xMax, float yMax );
+
 };
 
 
