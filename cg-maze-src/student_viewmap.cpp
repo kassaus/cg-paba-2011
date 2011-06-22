@@ -24,6 +24,7 @@ Computer Graphics Maze.
 #include "student_viewmap.h"
 #include "cell.h"
 
+int playerX = 0, playerY = 0;
 
 /* Construtor
 */
@@ -133,6 +134,9 @@ void ViewMap::paint( int x, int y, Cell c )
     if(c.players !=0)
         glColor3ub( VIEWMAP_COLOR_3UB_PLAYER1 );
 
+    if ( (playerX == x) && (playerY == y)){
+        glColor3ub( VIEWMAP_COLOR_3UB_PLAYER1POS );
+    }
 
 
     glBegin(GL_QUADS);
