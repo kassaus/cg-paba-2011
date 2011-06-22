@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 3. Jun 20:12:43 2011
+** Created: Fri 3. Jun 23:24:10 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -372,7 +372,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabSet->setCurrentIndex(0);
+        tabSet->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -438,12 +438,12 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Este software \303\251 gratuito </span><span style=\" font-size:8pt; font-weight:600;\">desde que</span><span style=\" font-size:8pt;\"><br />mantenha esta mensagem de direito de autor.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">\302\240</span><span style=\" font-size:8pt;\"> </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
-                        "t:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Ant\303\263nio Louren\303\247o a20091565</span><span style=\" font-size:8pt;\"> </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Paulo Lu\303\255s a20095165 ???</span><span style=\" font-size:8pt;\"> </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Bruno Machado</span><span style=\" font-size:8pt;\"> </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Alexandre Palma</span><span style=\" font-size:8pt;\"> a20090894</span><"
-                        "/p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
+                        "t:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Bruno Machado</span><span style=\" font-size:8pt;\"> a20090284</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Alexandre Palma</span><span style=\" font-size:8pt;\"> a20090894</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Ant\303\263nio Louren\303\247o a20091565</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2,sans-serif'; font-size:8pt;\">Paulo Lu\303\255s a20095167</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:"
+                        "0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         tabSet->setTabText(tabSet->indexOf(tabAbout), QApplication::translate("MainWindow", "&Autoria", 0, QApplication::UnicodeUTF8));
         tabSet->setTabToolTip(tabSet->indexOf(tabAbout), QApplication::translate("MainWindow", "Autoria do jogo", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP

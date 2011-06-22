@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
+    //para guardar a localização actual do jogador  ****nosso
 
     w.resetStateNew();  // Assegurar-me que o aspecto esta no estado inicial
     w.show();

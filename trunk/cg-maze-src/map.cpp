@@ -20,7 +20,7 @@ Computer Graphics Maze.
 #include "map.h"
 #include "cell.h"
 #include "compass.h"
-
+#include "student_viewmap.h"
 
 /* Construtor
    Nao permite que a classe seja criada com um labirinto de tamanho invalido.
@@ -129,6 +129,11 @@ void Map::setPlayer( int x, int y, unsigned int player )
     Cell c = getCell( x, y );
     c.players |= player;  // Assegurar-me que so' vou alterar os bits dos jogadores
     writeCell( x, y, c, false );  // Nao fazer animacao ao alterar os jogadores
+
+    //gravar a posição do jogador  *****nosso
+    playerX =x;
+    playerY =y;
+
 }
 
 
