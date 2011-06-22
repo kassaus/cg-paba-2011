@@ -153,267 +153,95 @@ void View3D::paint( float x, float y, float compass_direction )
     int mx, my;
     int distanciaMax = 100;
 
-    int minX, minY, maxX, maxY;
-
-    int xPosIni;
-    int xPosFin;
-
-    int yPosIni;
-    int yPosFin;
-
-
-
-
-    //calcula parede para todas a direcções
-    int paredexPositivo;
-    int paredeyPositivo;
-    int paredexNegativo;
-    int paredeyNegativo;
+    int paredeXmin = x;
+    int paredeYmin = y;
+    int paredeXmax = x;
+    int paredeYmax = y;
 
-    //calcula parede para Este
-    mx = x;
-    my = y;
-    while (true) {
-        mx++;
-        c = map->getCell( mx, my );
-        if ( ! c.isWallOrClosed() )
-            continue;
-        paredexPositivo = mx;
-        break;
-    }
 
-    //calcula parede para Sul
-    mx = x;
-    my = y;
-    while (true) {
-        my--;
-        c = map->getCell( mx, my );
-        if ( ! c.isWallOrClosed() )
-            continue;
-        paredeyNegativo = my;
-        break;
-    }
+    //procura parede para NORTE
+    do {
 
-    //calcula parede para Oeste
-    mx = x;
-    my = y;
-    while (true) {
-        mx--;
-        c = map->getCell( mx, my );
-        if ( ! c.isWallOrClosed() )
-            continue;
-        paredexNegativo = mx;
-        break;
-    }
+        c = map->getCell( x, paredeYmax );
+        paredeYmax++;
+    } while ( !c.isWallOrClosed());
 
-    //calcula parede para Norte
-    mx = x;
-    my = y;
-    while (true) {
-        my++;
-        c = map->getCell( mx, my );
-        if ( ! c.isWallOrClosed() )
-            continue;
-        paredeyPositivo = my;
-        break;
-    }
+    //procura parede para SUL
+    do {
 
+        c = map->getCell( x, paredeYmin );
+        paredeYmin--;
+    } while ( !c.isWallOrClosed());
 
+    //procura parede para ESTE
+    do {
+        c = map->getCell( paredeXmax, y );
+        paredeXmax++;
+    } while ( !c.isWallOrClosed());
 
-    int naoDesenha = -1;
+    //procura parede para OESTE
+    do {
+        c = map->getCell( paredeXmin, y );
+        paredeXmin--;
+    } while ( !c.isWallOrClosed());
 
-    if ( (int)compass_direction ==0) {          //Sul
-        minX = x - distanciaMax;
-        maxX = x + 1;
-        minY = y - distanciaMax;
-        maxY = y + distanciaMax;
 
-        naoDesenha = 0;
+printf("%d %d %d %d", paredeXmin, paredeXmax, paredeYmin, paredeYmax);
 
-    }
-    else if ((int)compass_direction ==1){       //Oeste
-        minX = x - distanciaMax;
-        maxX = x + distanciaMax;
-        minY = y - distanciaMax;
-        maxY = y + 1;
+//    if ( (int)compass_direction ==0) {          //Sul
+//        minX = x - distanciaMax;
+//        maxX = x + 1;
+//        minY = y - distanciaMax;
+//        maxY = y + distanciaMax;
 
-        naoDesenha = 1;
 
-    }
-    else if ((int)compass_direction ==2){       //Norte
-        minX = x - 1;
-        maxX = x + distanciaMax;
-        minY = y - distanciaMax;
-        maxY = y + distanciaMax;
+//    }
+//    else if ((int)compass_direction ==1){       //Oeste
+//        minX = x - distanciaMax;
+//        maxX = x + distanciaMax;
+//        minY = y - distanciaMax;
+//        maxY = y + 1;
 
-        naoDesenha = 2;
-    }
-    else{                                       //Este
-        minX = x -1;
-        maxX = x + distanciaMax;
-        minY = y - distanciaMax;
-        maxY = y + distanciaMax;
 
-        naoDesenha = 3;
-    }
 
+//    }
+//    else if ((int)compass_direction ==2){       //Norte
+//        minX = x - 1;
+//        maxX = x + distanciaMax;
+//        minY = y - distanciaMax;
+//        maxY = y + distanciaMax;
 
 
+//    }
+//    else{                                       //Este
+//        minX = x -1;
+//        maxX = x + distanciaMax;
+//        minY = y - distanciaMax;
+//        maxY = y + distanciaMax;
 
+//    }
 
-    // desenha para "Norte" da posição
-    for (mx = x-1 ; mx <= x+1 ; mx++){
-        for (my = y; my <= paredeyPositivo; my++){
 
 
 
 
-            c = map->getCell( mx, my );
+    //paintIntervalos(0,0, map->getWidth(), map->getHeight() );
 
+    //paint NORTE
+    paintIntervalos(x-2, y+5 , x+2 , paredeYmax);
 
-            if(c.isWall()){
+    //paint SUL
+    paintIntervalos(x-2 , paredeYmin , x+2 , y -5);
 
-                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
+    //paint ESTE
+    paintIntervalos(x+5 , y-2 , paredeXmax , y+2);
 
-            }
+    //paint OESTE
+    paintIntervalos(paredeXmin , y-2 , x -5 , y+2);
 
-            else if(c.isFloor()){
 
-                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
-
-            }
-            else if(c.isDoor()){
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-            else {
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-
-
-
-
-
-
-        }
-    }
-
-    // desenha para "Sul" da posição
-    for (mx = x-1 ; mx <= x+1 ; mx++){
-        for (my = y; my >= paredeyNegativo; my--){
-
-
-
-
-            c = map->getCell( mx, my );
-
-
-            if(c.isWall()){
-
-                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
-
-            }
-
-            else if(c.isFloor()){
-
-                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
-
-            }
-            else if(c.isDoor()){
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-            else {
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-
-
-
-
-        }
-    }
-
-    // desenha para "Este" da posição
-    for (my = y-1 ; my <= y+1 ; my++){
-        for (mx = x; my <= paredexPositivo; mx++){
-
-
-            c = map->getCell( mx, my );
-
-
-            if(c.isWall()){
-
-                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
-
-            }
-
-            else if(c.isFloor()){
-
-                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
-
-            }
-            else if(c.isDoor()){
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-            else {
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-
-
-
-
-        }
-    }
-
-    // desenha para "Oeste" da posição
-    for (my = y-1 ; my <= y+1 ; my++){
-        for (mx = x; mx >= paredexNegativo; mx--){
-
-
-
-            c = map->getCell( mx, my );
-
-
-            if(c.isWall()){
-
-                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
-
-            }
-
-            else if(c.isFloor()){
-
-                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
-
-            }
-            else if(c.isDoor()){
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-            else {
-                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-            }
-
-
-
-        }
-    }
-
-
-
-
+    //à volta do x,y
+    paintIntervalos(x - 5 , y-5 , x +5 , y+5);
 
 
     //original, tentar mais certinho...
@@ -453,7 +281,7 @@ void View3D::paint( float x, float y, float compass_direction )
 //                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
 //            }
 
-
+//    }
 
 
 
@@ -469,10 +297,48 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
 
+/*
+*/
+void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
+{
+    Cell celula;
+    int mx;
+    int my;
+
+    for( my = (int)yMin ; my <= (int)yMax ; my++ )
+        for( mx = (int)xMin ; mx <= (int)xMax ; mx++ )
+        {
 
 
 
+        celula = map->getCell( mx, my );
 
+
+        if(celula.isWall()){
+
+            paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_WALL);
+
+        }
+
+        else if(celula.isFloor()){
+
+            paintChao(mx, my, (celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
+
+        }
+        else if(celula.isDoor()){
+            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+        }
+         //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
+
+
+
+        else {
+            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+        }
+
+}
+
+}
 
 
 
