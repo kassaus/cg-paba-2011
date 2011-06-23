@@ -104,7 +104,7 @@ void View3D::resize( int view_width, int view_height )
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        gluPerspective(45.0f,(GLfloat)view_width/(GLfloat)view_height,0.1f,100.0f);
+        gluPerspective(45.0f,(GLfloat)view_width/(GLfloat)view_height,0.1f,200.0f);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -159,33 +159,35 @@ void View3D::paint( float x, float y, float compass_direction )
     int paredeYmax = y;
 
 
+    float difCentro = 0.6f;
+
     //procura parede para NORTE
     do {
 
-        c = map->getCell( x, paredeYmax );
+        c = map->getCell( x + difCentro, paredeYmax );
         paredeYmax++;
     } while ( !c.isWallOrClosed());
 
     //procura parede para SUL
     do {
 
-        c = map->getCell( x, paredeYmin );
+        c = map->getCell( x + difCentro, paredeYmin );
         paredeYmin--;
     } while ( !c.isWallOrClosed());
 
     //procura parede para ESTE
     do {
-        c = map->getCell( paredeXmax, y );
+        c = map->getCell( paredeXmax, y + difCentro );
         paredeXmax++;
     } while ( !c.isWallOrClosed());
 
     //procura parede para OESTE
     do {
-        c = map->getCell( paredeXmin, y );
+        c = map->getCell( paredeXmin, y + difCentro );
         paredeXmin--;
     } while ( !c.isWallOrClosed());
 
-
+//retirar depois
 printf("%d %d %d %d", paredeXmin, paredeXmax, paredeYmin, paredeYmax);
 
 //    if ( (int)compass_direction ==0) {          //Sul
