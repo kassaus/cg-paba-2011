@@ -36,6 +36,7 @@ Map::Map( int width, int height )
 
     // O construtor Cell() ja' limpou todas as celulas para serem FLOOR;
     // Agora limpo a area de desenho do mapa
+
     emit clearedMap();
 }
 
