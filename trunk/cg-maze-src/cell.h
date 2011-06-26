@@ -45,15 +45,6 @@ struct Cell
 
 
 
-//    /*para tentarmos gravar o sítio actual do jogador
-//     *  true se o jogador se encontrar na célula
-//     *  false se não está
-//    */
-//    bool hasPlayer;
-
-
-
-
     Cell( Type t = FLOOR, int obj = 0 )
 	{ this->type = t; this->object = obj; this->players = 0U; }
     bool isWall()          { return this->type == WALL; }

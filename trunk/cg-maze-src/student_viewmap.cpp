@@ -139,6 +139,7 @@ void ViewMap::paint( int x, int y, Cell c )
     }
 
 
+
     glBegin(GL_QUADS);
         glVertex3f( x, y, 0.0f);
         glVertex3f( x+1, y, 0.0f);

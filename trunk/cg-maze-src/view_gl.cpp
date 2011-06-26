@@ -152,6 +152,7 @@ void ViewMapGL::paintGL()
     makeCurrent();  // Ver comentario no ficheiro .h
     viewmap->paint();
 
+
     if( was_active )
 	delayed.paint_timer->start();
 }

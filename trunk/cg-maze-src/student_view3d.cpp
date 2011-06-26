@@ -96,15 +96,20 @@ void View3D::resize( int view_width, int view_height )
 {
 
         //garantir que a janela tem pelo menos 1 ponto, evitar divisões por zero
-        view_width = view_width?view_width:1;
-        view_height = view_height?view_height:1;
+        view_width = view_width ? view_width : 1;
+        view_height = view_height ? view_height : 1;
 
         glViewport( 0, 0, view_width, view_height );
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        gluPerspective(45.0f,(GLfloat)view_width/(GLfloat)view_height,0.1f,200.0f);
+        //para o frustrum de perspectiva
+        float altura = map->getHeight();
+        float largura = map->getWidth();
+        float profMax = (altura > largura) ? altura+1 : largura+1;
+
+        gluPerspective( 45.0f,(GLfloat)view_width/(GLfloat)view_height ,0.1f , profMax);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -142,7 +147,6 @@ void View3D::paint( float x, float y, float compass_direction )
             colocá-la no meio do cubo x,y,z
             apontá-la para o ponto de visualização consoante o compasso
             definir "cima" o eixo posivo z
-
     */
     gluLookAt( x+0.5f, y+0.5f, 0.5f ,
                x + 0.5f + (xview * 0.5f) , y + 0.5f + (yview * 0.5f)  , 0.5f ,
@@ -159,134 +163,66 @@ void View3D::paint( float x, float y, float compass_direction )
     int paredeYmax = y;
 
 
-    float difCentro = 0.6f;
-
-    //procura parede para NORTE
-    do {
-
-        c = map->getCell( x + difCentro, paredeYmax );
-        paredeYmax++;
-    } while ( !c.isWallOrClosed());
-
-    //procura parede para SUL
-    do {
-
-        c = map->getCell( x + difCentro, paredeYmin );
-        paredeYmin--;
-    } while ( !c.isWallOrClosed());
-
-    //procura parede para ESTE
-    do {
-        c = map->getCell( paredeXmax, y + difCentro );
-        paredeXmax++;
-    } while ( !c.isWallOrClosed());
-
-    //procura parede para OESTE
-    do {
-        c = map->getCell( paredeXmin, y + difCentro );
-        paredeXmin--;
-    } while ( !c.isWallOrClosed());
-
-//retirar depois
-printf("%d %d %d %d", paredeXmin, paredeXmax, paredeYmin, paredeYmax);
-
-//    if ( (int)compass_direction ==0) {          //Sul
-//        minX = x - distanciaMax;
-//        maxX = x + 1;
-//        minY = y - distanciaMax;
-//        maxY = y + distanciaMax;
-
-
-//    }
-//    else if ((int)compass_direction ==1){       //Oeste
-//        minX = x - distanciaMax;
-//        maxX = x + distanciaMax;
-//        minY = y - distanciaMax;
-//        maxY = y + 1;
 
 
 
-//    }
-//    else if ((int)compass_direction ==2){       //Norte
-//        minX = x - 1;
-//        maxX = x + distanciaMax;
-//        minY = y - distanciaMax;
-//        maxY = y + distanciaMax;
-
-
-//    }
-//    else{                                       //Este
-//        minX = x -1;
-//        maxX = x + distanciaMax;
-//        minY = y - distanciaMax;
-//        maxY = y + distanciaMax;
-
-//    }
+    /*para procurar centrado na célula certa, temos de avançar .5 em relação a x,y
+    */
+    float difCentro = 0.5f;
 
 
 
+    if (  !(compass_direction <0.5 && compass_direction >=3.5) ){
+        //procura parede para NORTE
+        do {
+            c = map->getCell( x + difCentro, paredeYmax );
+            paredeYmax++;
+        } while ( !c.isWallOrClosed());
+
+        //paint NORTE
+        paintIntervalos(x-2, y+5 , x+2 , paredeYmax);
+    }
 
 
-    //paintIntervalos(0,0, map->getWidth(), map->getHeight() );
 
-    //paint NORTE
-    paintIntervalos(x-2, y+5 , x+2 , paredeYmax);
+    if ( !(compass_direction >=1.5 && compass_direction <=2.5) ){
+        //procura parede para SUL
+        do {
+            c = map->getCell( x + difCentro, paredeYmin );
+            paredeYmin--;
+        } while ( !c.isWallOrClosed());
 
-    //paint SUL
-    paintIntervalos(x-2 , paredeYmin , x+2 , y -5);
-
-    //paint ESTE
-    paintIntervalos(x+5 , y-2 , paredeXmax , y+2);
-
-    //paint OESTE
-    paintIntervalos(paredeXmin , y-2 , x -5 , y+2);
+        //paint SUL
+        paintIntervalos(x-2 , paredeYmin , x+2 , y -5);
+    }
 
 
-    //à volta do x,y
+    if ( !(compass_direction >=0.5 && compass_direction <=1.5) ){
+        //procura parede para ESTE
+        do {
+            c = map->getCell( paredeXmax, y + difCentro );
+            paredeXmax++;
+        } while ( !c.isWallOrClosed());
+
+        //paint ESTE
+        paintIntervalos(x+5 , y-2 , paredeXmax , y+2);
+    }
+
+
+    if ( !(compass_direction >=2.5 && compass_direction <=3.5) ){
+        //procura parede para OESTE
+        do {
+            c = map->getCell( paredeXmin, y + difCentro );
+            paredeXmin--;
+        } while ( !c.isWallOrClosed());
+
+        //paint OESTE
+        paintIntervalos(paredeXmin , y-2 , x -5 , y+2);
+    }
+
+
+    // paint à volta do x,y
     paintIntervalos(x - 5 , y-5 , x +5 , y+5);
-
-
-    //original, tentar mais certinho...
-//    for( my = 0; my < map->getHeight(); my++ )
-//        for( mx = 0; mx < map->getWidth(); mx++ )
-//        {
-
-
-//        for( my = y - distanciaMax ; my < y + distanciaMax ; my++ )
-//            for( mx = x - distanciaMax ; mx < x + distanciaMax ; mx++ )
-//            {
-
-
-
-//            c = map->getCell( mx, my );
-
-
-//            if(c.isWall()){
-
-//                paintParede(mx, my, c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_WALL);
-
-//            }
-
-//            else if(c.isFloor()){
-
-//                paintChao(mx, my, (c.hasObject()? (int)c.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
-
-//            }
-//            else if(c.isDoor()){
-//                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-//            }
-//             //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-//            else {
-//                paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-//            }
-
-//    }
-
-
-
 
 
 }
