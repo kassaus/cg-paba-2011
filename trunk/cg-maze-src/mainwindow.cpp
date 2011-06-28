@@ -235,7 +235,12 @@ void MainWindow::moveFwd()
 	{
 	pp->x = x;
 	pp->y = y;
+
+        //QSound::play("c:\\");
 	}
+    else { //se for parede, fazer som de parede
+        QSound::play("c:\\");
+    }
     // else fazer algum tipo de som ou efeito?
 }
 

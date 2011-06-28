@@ -28,6 +28,11 @@ Computer Graphics Maze.
 #include "student_viewmap.h"
 
 
+
+
+
+
+
 /* Construtor
    Atencao que "map" pode ser NULL!
 */
@@ -42,6 +47,13 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 //        //ver se temos de fazer clear
 //        return;
 //    }
+
+
+
+      //inicializar a iluminação
+        GLfloat LightAmbient[]= { 0.2f, 0.2f, 0.2f, 1.0f };
+        GLfloat LightDiffuse[]= { 0.5f, 0.5f, 0.5f, 1.0f };
+        GLfloat LightPosition[]= { 0.0f, 0.0f, 2.0f, 1.0f };	//provavelmente, temos de alterar
 
 
     //carregar as texturas
@@ -76,7 +88,11 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
 
-
+    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);				// Setup The Ambient Light
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);				// Setup The Diffuse Light
+//    glLightfv(GL_LIGHT1, GL_POSITION,LightPosition);			// Position The Light
+//    glEnable(GL_LIGHT1);
+//    glEnable(GL_LIGHTING);
 }
 
 
@@ -115,6 +131,7 @@ void View3D::resize( int view_width, int view_height )
         glLoadIdentity();
 
 
+
 }
 
 
@@ -141,6 +158,26 @@ void View3D::paint( float x, float y, float compass_direction )
     */
     float xview = cos(anguloRad);
     float yview = sin(anguloRad);
+
+
+
+    //iluminação
+//        GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 1.0f };
+
+    GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
+
+        glLightfv(GL_LIGHT1,
+                  GL_POSITION,
+                  LightPosition);			// Position The Light
+
+
+
+//        x + 0.5f + (xview * 0.5f) , y + 0.5f + (yview * 0.5f)  , 0.5f
+
+
+        glEnable(GL_LIGHT1);
+        glEnable(GL_LIGHTING);
+
 
 
     /* colocar e apontar a câmara
@@ -314,28 +351,28 @@ void View3D::paintParede(int x, int y, GLuint textura)
     glBegin(GL_QUADS);
 
     //frente
-//        glNormal3i( 0, -1, 0);
+        glNormal3i( 0, -1, 0);
         glTexCoord2i(0, 0); glVertex3i( x + 0, y + 0, z + 0);
         glTexCoord2i(1, 0); glVertex3i( x + 1, y + 0, z + 0);
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 0, z + 1);
         glTexCoord2i(0, 1); glVertex3i( x + 0, y + 0, z + 1);
 
     //lado direito
-//        glNormal3i( 1, 0, 0);
+        glNormal3i( 1, 0, 0);
         glTexCoord2i(0, 0); glVertex3i( x + 1, y + 0, z + 0);
         glTexCoord2i(1, 0); glVertex3i( x + 1, y + 1, z + 0);
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 1, z + 1);
         glTexCoord2i(0, 1); glVertex3i( x + 1, y + 0, z + 1);
 
     //fundo
-//        glNormal3i( 0, 1, 0);
+        glNormal3i( 0, 1, 0);
         glTexCoord2i(0, 0); glVertex3i( x + 1, y + 1, z + 0);
         glTexCoord2i(1, 0); glVertex3i( x + 0, y + 1, z + 0);
         glTexCoord2i(1, 1); glVertex3i( x + 0, y + 1, z + 1);
         glTexCoord2i(0, 1); glVertex3i( x + 1, y + 1, z + 1);
 
     //lado esquerdo
-//        glNormal3i( -1, 0, 0);
+        glNormal3i( -1, 0, 0);
         glTexCoord2i(0, 0); glVertex3i( x + 0, y + 1, z + 0);
         glTexCoord2i(1, 0); glVertex3i( x + 0, y + 0, z + 0);
         glTexCoord2i(1, 1); glVertex3i( x + 0, y + 0, z + 1);
@@ -370,7 +407,7 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
     glBindTexture(GL_TEXTURE_2D, id_textures[texturaCima]);
 
     glBegin(GL_QUADS);
-//        glNormal3i( 0, 0, -1);
+        glNormal3i( 0, 0, -1);
         glTexCoord2i(0, 0); glVertex3i( x + 0, y + 0, z + 1);
         glTexCoord2i(1, 0); glVertex3i( x + 0, y + 1, z + 1);
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 1, z + 1);
@@ -383,7 +420,7 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
     glBindTexture(GL_TEXTURE_2D, id_textures[texturaBaixo]);
 
     glBegin(GL_QUADS);
-//        glNormal3i( 0, 0, 1);
+       glNormal3i( 0, 0, 1);
         glTexCoord2i(0, 0); glVertex3i( x + 0, y + 0, z + 0);
         glTexCoord2i(1, 0); glVertex3i( x + 1, y + 0, z + 0);
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 1, z + 0);
