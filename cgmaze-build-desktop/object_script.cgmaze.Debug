@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\dialognew.o
+./debug\map.o
+./debug\student_mapcreate.o
+./debug\student_view3d.o
+./debug\student_view2d.o
+./debug\student_viewmap.o
+./debug\view_gl.o
+./debug\moc_mainwindow.o
+./debug\moc_dialognew.o
+./debug\moc_map.o
+./debug\moc_view_gl.o
+./debug\qrc_imgs.o
+);

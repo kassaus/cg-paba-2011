@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\dialognew.o
+./release\map.o
+./release\student_mapcreate.o
+./release\student_view3d.o
+./release\student_view2d.o
+./release\student_viewmap.o
+./release\view_gl.o
+./release\moc_mainwindow.o
+./release\moc_dialognew.o
+./release\moc_map.o
+./release\moc_view_gl.o
+./release\qrc_imgs.o
+);

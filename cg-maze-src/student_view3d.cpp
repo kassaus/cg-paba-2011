@@ -53,7 +53,7 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
       //inicializar a iluminação
         GLfloat LightAmbient[]= { 0.2f, 0.2f, 0.2f, 1.0f };
         GLfloat LightDiffuse[]= { 0.5f, 0.5f, 0.5f, 1.0f };
-        GLfloat LightPosition[]= { 0.0f, 0.0f, 2.0f, 1.0f };	//provavelmente, temos de alterar
+
 
 
     //carregar as texturas
