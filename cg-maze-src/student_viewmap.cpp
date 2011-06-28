@@ -40,6 +40,8 @@ ViewMap::ViewMap( int map_width, int map_height )
 
 
 
+
+
     // Inicializar OpenGL
 
         glShadeModel( GL_SMOOTH );
