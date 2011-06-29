@@ -51,8 +51,9 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
       //inicializar a iluminação
-        GLfloat LightAmbient[]= { 0.2f, 0.2f, 0.2f, 1.0f };
-        GLfloat LightDiffuse[]= { 0.5f, 0.5f, 0.5f, 1.0f };
+        GLfloat LightAmbient1[]= { 0.2f, 0.2f, 0.2f, 1.0f };
+        GLfloat LightDiffuse1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
+        GLfloat LightSpecular1[]={ 0.9f, 0.9f, 0.9f, 1.0f };
 
 
 
@@ -88,11 +89,12 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
 
-    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);				// Setup The Ambient Light
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);				// Setup The Diffuse Light
-//    glLightfv(GL_LIGHT1, GL_POSITION,LightPosition);			// Position The Light
-//    glEnable(GL_LIGHT1);
-//    glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular1);
+
+
+
 }
 
 
@@ -143,9 +145,6 @@ void View3D::resize( int view_width, int view_height )
 void View3D::paint( float x, float y, float compass_direction )
 {
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-
 
     /* passar o compass_direction para um angulo em Radianos
             passar o compass_direction para um angulo em relação ao eixo x
@@ -160,23 +159,26 @@ void View3D::paint( float x, float y, float compass_direction )
     float yview = sin(anguloRad);
 
 
-
     //iluminação
 //        GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 1.0f };
 
-    GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
+ //   GLfloat LightPosition1[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
 
-        glLightfv(GL_LIGHT1,
-                  GL_POSITION,
-                  LightPosition);			// Position The Light
-
-
-
-//        x + 0.5f + (xview * 0.5f) , y + 0.5f + (yview * 0.5f)  , 0.5f
+    GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 0.0f, 0.0f };
+    glLightfv(GL_LIGHT1,
+              GL_POSITION,
+              LightPosition1);
 
 
-        glEnable(GL_LIGHT1);
-        glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHTING);
+
+
+
+
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
 
 
@@ -191,23 +193,15 @@ void View3D::paint( float x, float y, float compass_direction )
 
 
     Cell c;
-    int mx, my;
-    int distanciaMax = 100;
-
     int paredeXmin = x;
     int paredeYmin = y;
     int paredeXmax = x;
     int paredeYmax = y;
 
 
-
-
-
     /*para procurar centrado na célula certa, temos de avançar .5 em relação a x,y
     */
     float difCentro = 0.5f;
-
-
 
     if (  !(compass_direction <0.5 && compass_direction >=3.5) ){
         //procura parede para NORTE

@@ -472,6 +472,9 @@ void View3DGL::initializeGL()
 
 
 
+
+
+
     view3d = new View3D( map, textures );
 
     if( view_width >= 0  &&  view_height >= 0 )

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 28. Jun 21:29:06 2011
+** Created: Wed 29. Jun 19:00:16 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,6 +18,7 @@
 #include <QtGui/QFrame>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLCDNumber>
 #include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
@@ -76,6 +77,8 @@ public:
     QLabel *label_2;
     QDial *dialCompass;
     QLabel *label_3;
+    QLabel *label_5;
+    QLCDNumber *lcdNumber;
     QSpacerItem *verticalSpacer;
     QMenuBar *menubar;
 
@@ -349,6 +352,17 @@ public:
 
         verticalLayout_4->addWidget(label_3);
 
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(label_5);
+
+        lcdNumber = new QLCDNumber(centralwidget);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+
+        verticalLayout_4->addWidget(lcdNumber);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer);
@@ -457,6 +471,7 @@ public:
         label_3->setToolTip(QApplication::translate("MainWindow", "Sul", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         label_3->setText(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("MainWindow", "Chaves", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

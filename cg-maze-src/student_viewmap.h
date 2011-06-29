@@ -42,12 +42,6 @@ private:
 
 public:
 
-
-//    //para guardar a localização actual do jogador  ****nosso
-//    static int playerX ;
-//    static int playerY ;
-
-
     Cell mapStore[1000][1000]; //para guardar o mapa
     bool doFlush ;   //para não fazer flush sem razão no paint
 
