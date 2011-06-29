@@ -22,6 +22,8 @@ Computer Graphics Maze.
 #include "compass.h"
 #include "view_gl.h"
 #include "student_mapcreate.h"
+#include <QLCDNumber>
+
 
 
 MainWindow::MainWindow( QWidget *parent ) :
@@ -231,17 +233,58 @@ void MainWindow::moveFwd()
     x = pp->x;
     y = pp->y;
     map->moveFwd( &x, &y, pp->compass );
+
+
+    Cell c;
+    c = map->getCell(x,y);
+
+
+    if (c.isFloorOrOpen());
+
+    if (c.hasObject());
+
+
+
+
+
     if( map->isFloorOrOpen(x, y) )
 	{
 	pp->x = x;
 	pp->y = y;
 
-        //QSound::play("c:\\");
+        QSound::play("c:\\");
 	}
     else { //se for parede, fazer som de parede
+
+        int antigo = ui->lcdNumber->intValue();
+        int novo = antigo++;
+
+        QString novoS = QString::number(novo);
+
+//        novoS.append(QString("%1").arg(novo));
+
+
+//        QString paraDisplay;
+//        paraDisplay += "0" + novo;
+
+        int intToConvert = novo;
+
+        QVariant tmp(intToConvert);
+        QString intConvertedToString = tmp.toString();
+
+
+
+        ui->lcdNumber->display( intConvertedToString );
+//        ui->lcdNumber->show();
+
         QSound::play("c:\\");
+
     }
-    // else fazer algum tipo de som ou efeito?
+
+
+
+
+
 }
 
 
