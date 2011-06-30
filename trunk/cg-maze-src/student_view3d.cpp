@@ -327,8 +327,8 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
 
 
                     glEnable(GL_BLEND);
-                    glDisable(GL_DEPTH_TEST);
-//                      glDisable(GL_FOG);
+//                    glDisable(GL_DEPTH_TEST);
+                      glDisable(GL_FOG);
                     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
                     glBegin(GL_QUADS);
                        glNormal3i( 0, 0, 1);
@@ -339,7 +339,7 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
                     glEnd();
                     glDisable(GL_BLEND);
 //                                       glEnable(GL_FOG);
-                    glEnable(GL_DEPTH_TEST);
+//                    glEnable(GL_DEPTH_TEST);
 
 
 
