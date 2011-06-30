@@ -169,56 +169,104 @@ void features( Map *map )
 {
 
     int px, py;
-    int numPortas = 10;
-    int numChaves = 20;
-    int numParedesPintadas = 50;
-
-    Cell c;
-
     int mapHeight = map->getHeight();
     int mapWidth = map->getWidth();
 
+    int numCelulas = mapHeight * mapWidth;
+    int numPortas = numCelulas /20;
+    int numChaves = numCelulas /40;
+    int numParedesPintadasPaulo = numCelulas /150;
+    int numParedesPintadasBruno = numCelulas /150;
+    int numParedesPintadasAlex = numCelulas /150;
+    int numParedesPintadasAntonio = numCelulas /150;
+    int numParedesPintadasPedro = numCelulas /150;
+
+    Cell c;
 
 
+//#define VIEW3D_IX_TEXTURE_PAREDERISCADA 5
+//#define VIEW3D_IX_TEXTURE_CHAVE         6
+//#define VIEW3D_IX_TEXTURE_CARAPAULO     7
+//#define VIEW3D_IX_TEXTURE_CARAANTONIO   8
+//#define VIEW3D_IX_TEXTURE_CARAALEX      9
+//#define VIEW3D_IX_TEXTURE_CARABRUNO     10
+//#define VIEW3D_IX_TEXTURE_CARAPEDRO     11
 
+
+    //chão com chaves
     srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
     do{
-
         py = rand() %mapHeight ;
         px = rand() %mapWidth ;
-
         c = map->getCell(px,py);
-
-        if (c.isWall() && !c.hasObject() ){
-
-            c.object = 5;   //parederiscada
-            map->setCell(px, py, c);
-//            map->writeCell(px, py, c, false);
-            numParedesPintadas--;
-        }
-
-    } while ( numParedesPintadas>0);
-
-
-
-
-    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
-    do{
-
-        py = rand() %mapHeight ;
-        px = rand() %mapWidth ;
-
-        c = map->getCell(px,py);
-
         if (c.isFloor() && !c.hasObject() ){
-
-            c.object = 6;   //chao com chave
-            map->setCell(px, py, c);
-//            map->writeCell(px, py, c, false);
+            map->setObject(px, py, 6);
             numChaves--;
         }
-
     } while ( numChaves>0);
+
+
+
+    //paredes com Paulo
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,7);
+            numParedesPintadasPaulo--;
+        }
+    } while ( numParedesPintadasPaulo>0);
+
+    //paredes com Bruno
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,10);
+            numParedesPintadasBruno--;
+        }
+    } while ( numParedesPintadasBruno>0);
+
+    //paredes com Pedro
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,11);
+            numParedesPintadasPedro--;
+        }
+    } while ( numParedesPintadasPedro>0);
+
+    //paredes com Alex
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,9);
+            numParedesPintadasAlex--;
+        }
+    } while ( numParedesPintadasAlex>0);
+
+    //paredes com Antonio
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,8);
+            numParedesPintadasAntonio--;
+        }
+    } while ( numParedesPintadasAntonio>0);
+
 
 
 }

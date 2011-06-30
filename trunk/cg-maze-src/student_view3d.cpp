@@ -51,7 +51,7 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
       //inicializar a iluminação
-        GLfloat LightAmbient1[]= { 0.2f, 0.2f, 0.2f, 1.0f };
+        GLfloat LightAmbient1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
         GLfloat LightDiffuse1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
         GLfloat LightSpecular1[]={ 0.9f, 0.9f, 0.9f, 1.0f };
 
@@ -164,7 +164,7 @@ void View3D::paint( float x, float y, float compass_direction )
 
  //   GLfloat LightPosition1[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
 
-    GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 0.0f, 0.0f };
+    GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 100.0f, 0.0f };
     glLightfv(GL_LIGHT1,
               GL_POSITION,
               LightPosition1);
@@ -274,6 +274,27 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
     int mx;
     int my;
 
+
+
+    //fog
+    GLuint filter;						// Which Filter To Use
+    GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR };	// Storage For Three Types Of Fog
+    GLuint fogfilter= 0;					// Which Fog To Use
+    GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f};		// Fog Color
+    glClearColor(0.5f,0.5f,0.5f,1.0f);			// We'll Clear To The Color Of The Fog ( Modified )
+
+//    glFogi(GL_FOG_MODE, fogMode[fogfilter]);		// Fog Mode
+        glFogi(GL_FOG_MODE, fogMode[GL_EXP2]);		// Fog Mode
+    glFogfv(GL_FOG_COLOR, fogColor);			// Set Fog Color
+    glFogf(GL_FOG_DENSITY, 0.35f);				// How Dense Will The Fog Be
+    glHint(GL_FOG_HINT, GL_DONT_CARE);			// Fog Hint Value
+    glFogf(GL_FOG_START, 1.0f);				// Fog Start Depth
+    glFogf(GL_FOG_END, 5.0f);				// Fog End Depth
+/*    glEnable(GL_FOG);	*/				// Enables GL_FOG
+
+
+
+
     for( my = (int)yMin ; my <= (int)yMax ; my++ )
         for( mx = (int)xMin ; mx <= (int)xMax ; mx++ )
         {
@@ -283,27 +304,60 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
         celula = map->getCell( mx, my );
 
 
-        if(celula.isWall()){
-
-            paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_WALL);
-
-        }
-
-        else if(celula.isFloor()){
-
-            paintChao(mx, my, (celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
+        if(celula.isWallOrClosed()){
+            if (celula.isDoor())
+                paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_DOOR_CLOSED);
+            else
+                paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_WALL);
 
         }
-        else if(celula.isDoor()){
-            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+        else if(celula.isFloorOrOpen()){
+            if (celula.isDoor())
+                paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_DOOR_OPEN);
+            else {
+//                paintChao(mx, my, (celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
+                paintChao(mx, my,VIEW3D_IX_TEXTURE_FLOOR , VIEW3D_IX_TEXTURE_CEILING);
+
+                if (celula.hasObject() && (int)celula.object==VIEW3D_IX_TEXTURE_CHAVE){
+
+                    //baixo, textura virada para cima
+                    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CHAVE]);
+                    int z = 0;
+
+
+
+                    glEnable(GL_BLEND);
+                    glDisable(GL_DEPTH_TEST);
+//                      glDisable(GL_FOG);
+                    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+                    glBegin(GL_QUADS);
+                       glNormal3i( 0, 0, 1);
+                        glTexCoord2i(0, 0); glVertex3i( mx + 0, my + 0, z + 0);
+                        glTexCoord2i(1, 0); glVertex3i( mx + 1, my + 0, z + 0);
+                        glTexCoord2i(1, 1); glVertex3i( mx + 1, my + 1, z + 0);
+                        glTexCoord2i(0, 1); glVertex3i( mx + 0, my + 1, z + 0);
+                    glEnd();
+                    glDisable(GL_BLEND);
+//                                       glEnable(GL_FOG);
+                    glEnable(GL_DEPTH_TEST);
+
+
+
+                }
+
+
+            }
         }
+//        else if(celula.isDoor()){
+//            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+//        }
          //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
 
 
 
-        else {
-            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-        }
+//        else if (celula.isWallOrClosed()){
+//            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
+//        }
 
 }
 
@@ -342,6 +396,7 @@ void View3D::paintParede(int x, int y, GLuint textura)
 
     glBindTexture(GL_TEXTURE_2D, id_textures[textura]);
 
+//    glEnable(GL_FOG);
     glBegin(GL_QUADS);
 
     //frente
@@ -373,7 +428,7 @@ void View3D::paintParede(int x, int y, GLuint textura)
         glTexCoord2i(0, 1); glVertex3i( x + 0, y + 1, z + 1);
 
     glEnd();
-
+//glDisable(GL_FOG);
 
 }
 
@@ -398,6 +453,7 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
 
     //cima, textura virada para baixo
 
+//    glEnable(GL_FOG);
     glBindTexture(GL_TEXTURE_2D, id_textures[texturaCima]);
 
     glBegin(GL_QUADS);
@@ -420,6 +476,7 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 1, z + 0);
         glTexCoord2i(0, 1); glVertex3i( x + 0, y + 1, z + 0);
     glEnd();
+//    glDisable(GL_FOG);
 
 }
 

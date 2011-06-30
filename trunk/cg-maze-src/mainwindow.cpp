@@ -23,6 +23,7 @@ Computer Graphics Maze.
 #include "view_gl.h"
 #include "student_mapcreate.h"
 #include <QLCDNumber>
+#include <QSound>
 
 
 
@@ -223,6 +224,22 @@ void MainWindow::turnRight()
 void MainWindow::moveFwd()
 {
     int x, y;
+    static int numChavesNaMao;
+
+    int numChaves = map->getHeight() * map->getWidth() /40;
+//    QString lcdString[numChaves];
+
+//    for (int i; i<numChaves; i++)
+//        lcdString[i]= "" + i;
+
+    int antigo = ui->lcdNumber->intValue();
+    int novo = antigo++;
+    QString lcdString[]= { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                            "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+                            "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
+    static int lcdIndex;
+
+
 
     // Verificacoes basicas
     assert( map != NULL  &&
@@ -234,50 +251,80 @@ void MainWindow::moveFwd()
     y = pp->y;
     map->moveFwd( &x, &y, pp->compass );
 
-
     Cell c;
     c = map->getCell(x,y);
 
-
+//para depois
     if (c.isFloorOrOpen());
-
     if (c.hasObject());
 
 
 
-
-
+//se for chao
     if( map->isFloorOrOpen(x, y) )
 	{
 	pp->x = x;
 	pp->y = y;
 
-        QSound::play("c:\\");
+
+
+//chao e objecto
+        if (c.hasObject()){
+            if (c.object == 6){ //chave
+                QSound chave("../cg-maze-src/Key.wav");
+
+                chave.play();
+                map->setObject(x,y,0);
+                numChavesNaMao++;
+
+                ui->lcdNumber->display(lcdString[numChavesNaMao]);
+
+             }
+
+        }
+        //chao sem objecto
+        else {
+            static int repChao;
+            if (repChao%2==0) {
+                repChao++;
+                QSound::play("../cg-maze-src/wood_step_1.wav");
+            }
+            else {
+                repChao++;
+                QSound::play("../cg-maze-src/wood_step_2.wav");
+            }
+
+
+        }
+
 	}
-    else { //se for parede, fazer som de parede
 
-        int antigo = ui->lcdNumber->intValue();
-        int novo = antigo++;
+    //se for parede, fazer som de parede
+    else {
 
-        QString novoS = QString::number(novo);
+        static int repParede;
 
-//        novoS.append(QString("%1").arg(novo));
-
-
-//        QString paraDisplay;
-//        paraDisplay += "0" + novo;
-
-        int intToConvert = novo;
-
-        QVariant tmp(intToConvert);
-        QString intConvertedToString = tmp.toString();
-
-
-
-        ui->lcdNumber->display( intConvertedToString );
-//        ui->lcdNumber->show();
-
-        QSound::play("c:\\");
+        if (c.hasObject() ){
+            switch (c.object){
+            case 7: QSound::play("../cg-maze-src/Paulo.wav");
+                break;
+            case 8: QSound::play("../cg-maze-src/Antonio.wav");
+                break;
+            case 9: QSound::play("../cg-maze-src/Alex.wav");
+                break;
+            case 10: QSound::play("../cg-maze-src/Bruno.wav");
+                break;
+            case 11: QSound::play("../cg-maze-src/Pedro.wav");
+                break;
+            }
+        }
+        else if (repParede%2 ==0){
+            repParede++;
+            QSound::play("../cg-maze-src/wall_impact_1.wav");
+        } else {
+            repParede++;
+            QSound::play("../cg-maze-src/wall_impact_2.wav");
+        }
 
     }
 

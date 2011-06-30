@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 29. Jun 19:00:16 2011
+** Created: Thu 30. Jun 11:21:54 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -360,6 +360,7 @@ public:
 
         lcdNumber = new QLCDNumber(centralwidget);
         lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+        lcdNumber->setProperty("intValue", QVariant(0));
 
         verticalLayout_4->addWidget(lcdNumber);
 

@@ -632,7 +632,11 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item>
-         <widget class="QLCDNumber" name="lcdNumber"/>
+         <widget class="QLCDNumber" name="lcdNumber">
+          <property name="intValue" stdset="0">
+           <number>0</number>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">
