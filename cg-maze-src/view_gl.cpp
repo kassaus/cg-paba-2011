@@ -470,6 +470,55 @@ void View3DGL::initializeGL()
     textures[VIEW3D_IX_TEXTURE_CHAVE] = QGLWidget::convertToGLFormat( img );
 
 
+    // Prepara a imagem da textura DA PAREDE COM PROFESSOR
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.Pedro.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CARAPEDRO] = QGLWidget::convertToGLFormat( img );
+
+
+    // Prepara a imagem da textura DA PAREDE COM PAULO
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.Paulo.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CARAPAULO] = QGLWidget::convertToGLFormat( img );
+
+
+    // Prepara a imagem da textura DA PAREDECOM BRUNO
+        if( !img.load(":/mainwindow/texture/mainwindow.texture.Bruno.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CARABRUNO] = QGLWidget::convertToGLFormat( img );
+
+
+    // Prepara a imagem da textura DA PAREDE COM ALEX
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.Alex.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CARAALEX] = QGLWidget::convertToGLFormat( img );
+
+
+    // Prepara a imagem da textura DA PAREDE COM ANTONIO
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.Antonio.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_FLOOR).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_CARAANTONIO] = QGLWidget::convertToGLFormat( img );
+
+
+
+
+
+
 
 
 

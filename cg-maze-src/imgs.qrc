@@ -8,9 +8,33 @@
     </qresource>
     <qresource prefix="/mainwindow/texture">
         <file>mainwindow.texture.wall.png</file>
-        <file>mainwindow.texture.ceiling.png</file>
         <file>mainwindow.texture.floor.png</file>
         <file>mainwindow.texture.wallP1.png</file>
+        <file>mainwindow.texture.Alex.png</file>
+        <file>mainwindow.texture.Antonio.png</file>
+        <file>mainwindow.texture.Bruno.png</file>
+        <file>mainwindow.texture.ceiling.png</file>
         <file>mainwindow.texture.floorChave.png</file>
+        <file>mainwindow.texture.Paulo.png</file>
+        <file>mainwindow.texture.Pedro.png</file>
+        <file>mainwindow.texture.door-open.png</file>
+        <file>mainwindow.texture.door-closed.png</file>
+        <file>imgChaveAlfa.png</file>
+    </qresource>
+    <qresource prefix="/mainwindow/audio">
+        <file>water_step_1.wav</file>
+        <file>water_step_2.wav</file>
+        <file>water_step_3.wav</file>
+        <file>water_step_4.wav</file>
+        <file>wood_step_1.wav</file>
+        <file>wood_step_2.wav</file>
+        <file>wall_impact_2.wav</file>
+        <file>wall_impact_1.wav</file>
+        <file>Key.wav</file>
+        <file>Special_Object.wav</file>
+        <file>snow_step_2.wav</file>
+        <file>snow_step_1.wav</file>
+        <file>stone_step_2.wav</file>
+        <file>stone_step_1.wav</file>
     </qresource>
 </RCC>
