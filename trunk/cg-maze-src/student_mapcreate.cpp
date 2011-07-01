@@ -23,6 +23,7 @@ Computer Graphics Maze.
 #include <ctime>
 #include <cassert>
 #include "student_mapcreate.h"
+#include "student_view3d.h"
 
 
 namespace MapCreate
@@ -164,6 +165,8 @@ void walls( Map *map, int complexity )
 
 /* Cria agora as "caracteristicas" de jogo do mapa (objectos nos corredores,
    portas e outras). Esta funcao e' chamada imediatamente a seguir a walls().
+
+   *****nosso, muito alterado
 */
 void features( Map *map )
 {
@@ -173,17 +176,27 @@ void features( Map *map )
     int mapWidth = map->getWidth();
 
     int numCelulas = mapHeight * mapWidth;
-//    int numPortas = numCelulas /20;
-    int numChaves = numCelulas /70;
-    int numParedesPintadasPaulo = numCelulas /150;
-    int numParedesPintadasBruno = numCelulas /150;
-    int numParedesPintadasAlex = numCelulas /150;
-    int numParedesPintadasAntonio = numCelulas /150;
-    int numParedesPintadasPedro = numCelulas /150;
-    int numChaoAgua = numCelulas /70;
 
+    int numChaves =( (numCelulas/70 >60) ? 60: (numCelulas/70) );  //no máximo 60
+    int numParedesPintadasPaulo = numCelulas /250;
+    int numParedesPintadasBruno = numCelulas /250;
+    int numParedesPintadasAlex = numCelulas /250;
+    int numParedesPintadasAntonio = numCelulas /250;
+    int numParedesPintadasPedro = numCelulas /250;
+    int numParedesPintadasTaca = 20;   //deveria ser apenas 1, mas para ser mais fácil de encontrar na demonstração
+
+//    int numChaoAgua = numCelulas /70;
+//    int numPortas = numCelulas /20;
 
     Cell c;
+
+    //chão com água, colocado sempre no último terço do labirinto
+    for (px=(mapWidth/3)*2; px<mapWidth; px++)
+        for (py=(mapHeight/3)*2; py<mapHeight; py++){
+        c = map->getCell(px,py);
+            if (c.isFloor())
+                map->setObject(px, py, VIEW3D_IX_TEXTURE_AGUA);
+    }
 
     //chão com chaves
     srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
@@ -192,22 +205,25 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isFloor() && !c.hasObject() ){
-            map->setObject(px, py, 6);
+            map->setObject(px, py, VIEW3D_IX_TEXTURE_CHAVE);
             numChaves--;
         }
     } while ( numChaves>0);
 
-    //chão com agua
-    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
-    do{
-        py = rand() %mapHeight ;
-        px = rand() %mapWidth ;
-        c = map->getCell(px,py);
-        if (c.isFloor() && !c.hasObject() ){
-            map->setObject(px, py, 14);
-            numChaoAgua--;
-        }
-    } while ( numChaoAgua>0);
+//    //chão com agua aleatório
+//    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+//    do{
+//        py = rand() %mapHeight ;
+//        px = rand() %mapWidth ;
+//        c = map->getCell(px,py);
+//        if (c.isFloor() && !c.hasObject() ){
+//            map->setObject(px, py, 14);
+//            numChaoAgua--;
+//        }
+//    } while ( numChaoAgua>0);
+
+
+
 
 
 
@@ -218,7 +234,7 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isWall() && !c.hasObject() ){
-            map->setObject(px,py,7);
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_CARAPAULO);
             numParedesPintadasPaulo--;
         }
     } while ( numParedesPintadasPaulo>0);
@@ -230,7 +246,7 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isWall() && !c.hasObject() ){
-            map->setObject(px,py,10);
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_CARABRUNO);
             numParedesPintadasBruno--;
         }
     } while ( numParedesPintadasBruno>0);
@@ -242,7 +258,7 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isWall() && !c.hasObject() ){
-            map->setObject(px,py,11);
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_CARAPEDRO);
             numParedesPintadasPedro--;
         }
     } while ( numParedesPintadasPedro>0);
@@ -254,7 +270,7 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isWall() && !c.hasObject() ){
-            map->setObject(px,py,9);
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_CARAALEX);
             numParedesPintadasAlex--;
         }
     } while ( numParedesPintadasAlex>0);
@@ -266,10 +282,23 @@ void features( Map *map )
         px = rand() %mapWidth ;
         c = map->getCell(px,py);
         if (c.isWall() && !c.hasObject() ){
-            map->setObject(px,py,8);
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_CARAANTONIO);
             numParedesPintadasAntonio--;
         }
     } while ( numParedesPintadasAntonio>0);
+
+
+    //paredes com Taca
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isWall() && !c.hasObject() ){
+            map->setObject(px,py,VIEW3D_IX_TEXTURE_TACA);
+            numParedesPintadasTaca--;
+        }
+    } while ( numParedesPintadasTaca>0);
 
 
 

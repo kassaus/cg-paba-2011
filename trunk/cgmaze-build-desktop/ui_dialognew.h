@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dialognew.ui'
 **
-** Created: Fri 3. Jun 23:04:37 2011
+** Created: Fri 1. Jul 18:34:40 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -29,12 +29,12 @@ class Ui_DialogNew
 public:
     QFormLayout *formLayout;
     QLabel *label;
-    QSpinBox *spinCorridorWidth;
     QLabel *label_2;
     QSpinBox *spinCorridorHeight;
     QLabel *label_3;
     QSlider *sliderComplexity;
     QDialogButtonBox *buttonBox;
+    QSpinBox *spinCorridorWidth;
 
     void setupUi(QDialog *DialogNew)
     {
@@ -51,15 +51,6 @@ public:
 
         formLayout->setWidget(0, QFormLayout::LabelRole, label);
 
-        spinCorridorWidth = new QSpinBox(DialogNew);
-        spinCorridorWidth->setObjectName(QString::fromUtf8("spinCorridorWidth"));
-        spinCorridorWidth->setMinimum(1);
-        spinCorridorWidth->setMaximum(1000);
-        spinCorridorWidth->setSingleStep(5);
-        spinCorridorWidth->setValue(25);
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, spinCorridorWidth);
-
         label_2 = new QLabel(DialogNew);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
@@ -68,7 +59,7 @@ public:
         spinCorridorHeight = new QSpinBox(DialogNew);
         spinCorridorHeight->setObjectName(QString::fromUtf8("spinCorridorHeight"));
         spinCorridorHeight->setMinimum(1);
-        spinCorridorHeight->setMaximum(1000);
+        spinCorridorHeight->setMaximum(499);
         spinCorridorHeight->setSingleStep(5);
         spinCorridorHeight->setValue(15);
 
@@ -97,6 +88,15 @@ public:
 
         formLayout->setWidget(3, QFormLayout::SpanningRole, buttonBox);
 
+        spinCorridorWidth = new QSpinBox(DialogNew);
+        spinCorridorWidth->setObjectName(QString::fromUtf8("spinCorridorWidth"));
+        spinCorridorWidth->setMinimum(1);
+        spinCorridorWidth->setMaximum(499);
+        spinCorridorWidth->setSingleStep(5);
+        spinCorridorWidth->setValue(25);
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, spinCorridorWidth);
+
 #ifndef QT_NO_SHORTCUT
         label->setBuddy(spinCorridorWidth);
         label_2->setBuddy(spinCorridorHeight);
@@ -117,9 +117,6 @@ public:
     {
         DialogNew->setWindowTitle(QApplication::translate("DialogNew", "LOOM - Novo labirinto", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("DialogNew", "&Largura (Este-Oeste):", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        spinCorridorWidth->setToolTip(QApplication::translate("DialogNew", "N\303\272mero de corredores, de 1 a 1000", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
         label_2->setText(QApplication::translate("DialogNew", "&Altura (Norte-Sul):", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         spinCorridorHeight->setToolTip(QApplication::translate("DialogNew", "N\303\272mero de corredores, de 1 a 1000", 0, QApplication::UnicodeUTF8));
@@ -127,6 +124,9 @@ public:
         label_3->setText(QApplication::translate("DialogNew", "&Complexidade:", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         sliderComplexity->setToolTip(QApplication::translate("DialogNew", "Probabilidade de os corredores serem curtos", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_TOOLTIP
+        spinCorridorWidth->setToolTip(QApplication::translate("DialogNew", "N\303\272mero de corredores, de 1 a 1000", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
     } // retranslateUi
 

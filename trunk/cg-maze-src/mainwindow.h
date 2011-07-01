@@ -74,6 +74,11 @@ private slots:
     void on_pushTurnLeft2D_clicked();
     void on_tabSet_currentChanged( int index );
     void on_pushNew_clicked();
+
+    //******nosso
+    void on_tipoNevoeiro_clicked();
+    void botaoNevoeiroEnabled();
+    void botaoNevoeiroDisabled();
 };
 
 

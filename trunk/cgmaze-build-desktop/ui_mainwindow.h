@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 1. Jul 13:01:04 2011
+** Created: Fri 1. Jul 19:33:02 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -79,6 +79,7 @@ public:
     QLabel *label_3;
     QLabel *label_5;
     QLCDNumber *lcdNumber;
+    QPushButton *tipoNevoeiro;
     QSpacerItem *verticalSpacer;
     QMenuBar *menubar;
 
@@ -364,6 +365,12 @@ public:
 
         verticalLayout_4->addWidget(lcdNumber);
 
+        tipoNevoeiro = new QPushButton(centralwidget);
+        tipoNevoeiro->setObjectName(QString::fromUtf8("tipoNevoeiro"));
+        tipoNevoeiro->setEnabled(false);
+
+        verticalLayout_4->addWidget(tipoNevoeiro);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer);
@@ -387,7 +394,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabSet->setCurrentIndex(3);
+        tabSet->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -472,7 +479,9 @@ public:
         label_3->setToolTip(QApplication::translate("MainWindow", "Sul", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         label_3->setText(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("MainWindow", "Chaves", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("MainWindow", "Chaves no bolso", 0, QApplication::UnicodeUTF8));
+        tipoNevoeiro->setText(QApplication::translate("MainWindow", "Mudar Nevoeiro", 0, QApplication::UnicodeUTF8));
+        tipoNevoeiro->setShortcut(QApplication::translate("MainWindow", "N", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

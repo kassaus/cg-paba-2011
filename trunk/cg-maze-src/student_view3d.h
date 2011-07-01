@@ -26,6 +26,7 @@ Computer Graphics Maze.
 #include "map.h"
 #include "compass.h"
 
+
 #define VIEW3D_IX_TEXTURE_CEILING      0
 #define VIEW3D_IX_TEXTURE_WALL         1
 #define VIEW3D_IX_TEXTURE_DOOR_OPEN    2
@@ -33,6 +34,10 @@ Computer Graphics Maze.
 #define VIEW3D_IX_TEXTURE_FLOOR        4
 
 
+
+/*********************
+  adicionar as novas texturas
+  */
 #define VIEW3D_IX_TEXTURE_PAREDERISCADA 5
 #define VIEW3D_IX_TEXTURE_CHAVE         6
 #define VIEW3D_IX_TEXTURE_CARAPAULO     7
@@ -40,19 +45,14 @@ Computer Graphics Maze.
 #define VIEW3D_IX_TEXTURE_CARAALEX      9
 #define VIEW3D_IX_TEXTURE_CARABRUNO     10
 #define VIEW3D_IX_TEXTURE_CARAPEDRO     11
-
 #define VIEW3D_IX_TEXTURE_WALL_ICE      12
 #define VIEW3D_IX_TEXTURE_FLOOR_ICE     13
 #define VIEW3D_IX_TEXTURE_AGUA          14
 #define VIEW3D_IX_TEXTURE_TACA          15
 #define VIEW3D_IX_TEXTURE_20            16
 
-
-//adicionar depois as novas texturas
-
-
-//para já, apenas 12, originalmente 5
-#define VIEW3D_TEXTURES_NUMBER         17
+//para já 17, originalmente 5
+#define VIEW3D_TEXTURES_NUMBER          17
 
 
 
@@ -80,11 +80,10 @@ public:
     void resize( int view_width, int view_height );
     void paint( float x, float y, float compass_direction );
 
-
+//******nosso
     void paintParede(int x, int z, GLuint textura);
     void paintChao(int x, int z, GLuint texturaBaixo, GLuint texturaCima);
-
-   void paintIntervalos( float xMin, float yMin, float xMax, float yMax );
+    void paintIntervalos( float xMin, float yMin, float xMax, float yMax );
 
 };
 
