@@ -323,12 +323,7 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
                     //baixo, textura virada para cima
                     glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_CHAVE]);
                     int z = 0;
-
-
-
                     glEnable(GL_BLEND);
-//                    glDisable(GL_DEPTH_TEST);
-                      glDisable(GL_FOG);
                     glBlendFunc(GL_SRC_ALPHA,GL_ONE);
                     glBegin(GL_QUADS);
                        glNormal3i( 0, 0, 1);
@@ -338,10 +333,24 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
                         glTexCoord2i(0, 1); glVertex3i( mx + 0, my + 1, z + 0);
                     glEnd();
                     glDisable(GL_BLEND);
-//                                       glEnable(GL_FOG);
-//                    glEnable(GL_DEPTH_TEST);
 
+                }
 
+                if (celula.hasObject() && (int)celula.object==VIEW3D_IX_TEXTURE_AGUA){
+
+                    //baixo, textura virada para cima
+                    glBindTexture(GL_TEXTURE_2D, id_textures[VIEW3D_IX_TEXTURE_AGUA]);
+                    int z = 0;
+                    glEnable(GL_BLEND);
+                    glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+                    glBegin(GL_QUADS);
+                       glNormal3i( 0, 0, 1);
+                        glTexCoord2i(0, 0); glVertex3i( mx + 0, my + 0, z + 0);
+                        glTexCoord2i(1, 0); glVertex3i( mx + 1, my + 0, z + 0);
+                        glTexCoord2i(1, 1); glVertex3i( mx + 1, my + 1, z + 0);
+                        glTexCoord2i(0, 1); glVertex3i( mx + 0, my + 1, z + 0);
+                    glEnd();
+                    glDisable(GL_BLEND);
 
                 }
 

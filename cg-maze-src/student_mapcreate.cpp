@@ -173,25 +173,17 @@ void features( Map *map )
     int mapWidth = map->getWidth();
 
     int numCelulas = mapHeight * mapWidth;
-    int numPortas = numCelulas /20;
-    int numChaves = numCelulas /40;
+//    int numPortas = numCelulas /20;
+    int numChaves = numCelulas /70;
     int numParedesPintadasPaulo = numCelulas /150;
     int numParedesPintadasBruno = numCelulas /150;
     int numParedesPintadasAlex = numCelulas /150;
     int numParedesPintadasAntonio = numCelulas /150;
     int numParedesPintadasPedro = numCelulas /150;
+    int numChaoAgua = numCelulas /70;
+
 
     Cell c;
-
-
-//#define VIEW3D_IX_TEXTURE_PAREDERISCADA 5
-//#define VIEW3D_IX_TEXTURE_CHAVE         6
-//#define VIEW3D_IX_TEXTURE_CARAPAULO     7
-//#define VIEW3D_IX_TEXTURE_CARAANTONIO   8
-//#define VIEW3D_IX_TEXTURE_CARAALEX      9
-//#define VIEW3D_IX_TEXTURE_CARABRUNO     10
-//#define VIEW3D_IX_TEXTURE_CARAPEDRO     11
-
 
     //chão com chaves
     srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
@@ -204,6 +196,18 @@ void features( Map *map )
             numChaves--;
         }
     } while ( numChaves>0);
+
+    //chão com agua
+    srand( (unsigned int) time(NULL) ); //para garantirmos que é aleatório
+    do{
+        py = rand() %mapHeight ;
+        px = rand() %mapWidth ;
+        c = map->getCell(px,py);
+        if (c.isFloor() && !c.hasObject() ){
+            map->setObject(px, py, 14);
+            numChaoAgua--;
+        }
+    } while ( numChaoAgua>0);
 
 
 
