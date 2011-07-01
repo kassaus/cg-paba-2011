@@ -58,6 +58,14 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);
     glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular1);
 
+    GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 100.0f, 0.0f };
+    glLightfv(GL_LIGHT1,
+              GL_POSITION,
+              LightPosition1);
+
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHTING);
+
 
     //inicializar o nevoeiro
     GLfloat fogColor[4]= {0.4f, 0.4f, 0.4f, 1.0f};
@@ -76,11 +84,10 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
     for (int i=0; i<VIEW3D_TEXTURES_NUMBER ; i++ ){
         glBindTexture( GL_TEXTURE_2D, id_textures[i] );
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST); //verificar se são as melhores
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR_MIPMAP_NEAREST); //verificar se são as melhores
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);  //verificar se são as melhores
         gluBuild2DMipmaps(GL_TEXTURE_2D, 3, textures[i].width(), textures[i].height(), GL_RGBA, GL_UNSIGNED_BYTE, textures[i].bits());
     }
-
 
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
@@ -163,19 +170,6 @@ void View3D::paint( float x, float y, float compass_direction )
     */
     float xview = cos(anguloRad);
     float yview = sin(anguloRad);
-
-
-    //iluminação
-//        GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 1.0f };
- //   GLfloat LightPosition1[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
-
-    GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 100.0f, 0.0f };
-    glLightfv(GL_LIGHT1,
-              GL_POSITION,
-              LightPosition1);
-
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHTING);
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -272,40 +266,16 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
     int mx;
     int my;
 
-
-//    //fog
-//    GLuint filter;						// Which Filter To Use
-//    GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR };	// Storage For Three Types Of Fog
-//    GLuint fogfilter= 0;					// Which Fog To Use
-//    GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f};		// Fog Color
-//    glClearColor(0.5f,0.5f,0.5f,1.0f);			// We'll Clear To The Color Of The Fog ( Modified )
-
-////    glFogi(GL_FOG_MODE, fogMode[fogfilter]);		// Fog Mode
-//        glFogi(GL_FOG_MODE, fogMode[GL_EXP2]);		// Fog Mode
-//    glFogfv(GL_FOG_COLOR, fogColor);			// Set Fog Color
-//    glFogf(GL_FOG_DENSITY, 0.35f);				// How Dense Will The Fog Be
-//    glHint(GL_FOG_HINT, GL_DONT_CARE);			// Fog Hint Value
-//    glFogf(GL_FOG_START, 1.0f);				// Fog Start Depth
-//    glFogf(GL_FOG_END, 5.0f);				// Fog End Depth
-///*    glEnable(GL_FOG);	*/				// Enables GL_FOG
-
-
-
-
     for( my = (int)yMin ; my <= (int)yMax ; my++ )
         for( mx = (int)xMin ; mx <= (int)xMax ; mx++ )
         {
+            celula = map->getCell( mx, my );
 
-
-
-        celula = map->getCell( mx, my );
-
-
-        if(celula.isWallOrClosed()){
-            if (celula.isDoor())
-                paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_DOOR_CLOSED);
-            else
-                paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_WALL);
+            if(celula.isWallOrClosed()){
+                if (celula.isDoor())
+                    paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_DOOR_CLOSED);
+                else
+                    paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_WALL);
 
         }
         else if(celula.isFloorOrOpen()){
