@@ -225,6 +225,9 @@ void MainWindow::moveFwd()
 {
     int x, y;
     static int numChavesNaMao;
+    static int repChao;
+    static int repAgua;
+    bool nevoeiro = false;
 
     int numChaves = map->getHeight() * map->getWidth() /40;
 //    QString lcdString[numChaves];
@@ -279,12 +282,39 @@ void MainWindow::moveFwd()
 
                 ui->lcdNumber->display(lcdString[numChavesNaMao]);
 
+                glDisable(GL_FOG);
+
              }
+            if (c.object == 14){ //agua
+
+
+                glEnable(GL_FOG);
+
+                if (repAgua%4==0) {
+                    QSound::play("../cg-maze-src/water_step_1.wav");
+                }
+                else if (repAgua%4==1) {
+                    QSound::play("../cg-maze-src/water_step_2.wav");
+                }
+                else if (repAgua%4==2) {
+                    QSound::play("../cg-maze-src/water_step_3.wav");
+                }
+                else {
+                    QSound::play("../cg-maze-src/water_step_4.wav");
+                }
+
+
+
+             }
+
+
 
         }
         //chao sem objecto
         else {
-            static int repChao;
+
+            glDisable(GL_FOG);
+
             if (repChao%2==0) {
                 repChao++;
                 QSound::play("../cg-maze-src/wood_step_1.wav");

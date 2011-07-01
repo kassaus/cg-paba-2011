@@ -20,6 +20,11 @@
         <file>mainwindow.texture.door-open.png</file>
         <file>mainwindow.texture.door-closed.png</file>
         <file>imgChaveAlfa.png</file>
+        <file>imgAguaAlfa.png</file>
+        <file>mainwindow.texture.floor_ice.png</file>
+        <file>mainwindow.texture.wall_ice.png</file>
+        <file>mainwindow.texture.20.png</file>
+        <file>mainwindow.texture.Taca.png</file>
     </qresource>
     <qresource prefix="/mainwindow/audio">
         <file>water_step_1.wav</file>
