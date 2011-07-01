@@ -540,6 +540,22 @@ void View3DGL::initializeGL()
         }
     textures[VIEW3D_IX_TEXTURE_AGUA] = QGLWidget::convertToGLFormat( img );
 
+    // Prepara a imagem da textura DA TACA
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.Taca.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_WALL).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_TACA] = QGLWidget::convertToGLFormat( img );
+
+    // Prepara a imagem da textura DO 20
+    if( !img.load(":/mainwindow/texture/mainwindow.texture.20.png") )
+        {
+        img = QImage( 16, 16, QImage::Format_RGB888 );
+        img.fill( QColor(VIEW2D_COLOR_3UB_WALL).rgb() );
+        }
+    textures[VIEW3D_IX_TEXTURE_20] = QGLWidget::convertToGLFormat( img );
+
 
 
 

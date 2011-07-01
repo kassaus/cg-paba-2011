@@ -220,28 +220,34 @@ void MainWindow::turnRight()
 
 
 /* Este metodo e' chamado quando o jogador pede para avancar no labirinto.
+
+   ******nosso, muito alterado
 */
 void MainWindow::moveFwd()
 {
     int x, y;
+
+
     static int numChavesNaMao;
+
+    //para alternar nos sons
     static int repChao;
     static int repAgua;
-    bool nevoeiro = false;
+    static int repParede;
 
-    int numChaves = map->getHeight() * map->getWidth() /40;
-//    QString lcdString[numChaves];
+    static bool hasFog;
 
-//    for (int i; i<numChaves; i++)
-//        lcdString[i]= "" + i;
-
-    int antigo = ui->lcdNumber->intValue();
-    int novo = antigo++;
-    QString lcdString[]= { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    /*
+     única maneira que encontrámos para actualizar o LCD Number!!!!
+     (tentámos de quase tudo....)
+    */
+    QString lcdString[]= {  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
                             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
-                            "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
-    static int lcdIndex;
-
+                            "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
+                            "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
+                            "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
+                            "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"
+                        };
 
 
     // Verificacoes basicas
@@ -257,11 +263,6 @@ void MainWindow::moveFwd()
     Cell c;
     c = map->getCell(x,y);
 
-//para depois
-    if (c.isFloorOrOpen());
-    if (c.hasObject());
-
-
 
 //se for chao
     if( map->isFloorOrOpen(x, y) )
@@ -270,26 +271,29 @@ void MainWindow::moveFwd()
 	pp->y = y;
 
 
-
-//chao e objecto
+    //chao e objecto
         if (c.hasObject()){
+
             if (c.object == 6){ //chave
+                if (hasFog){
+                    glDisable(GL_FOG);
+                    botaoNevoeiroDisabled();
+                    hasFog = false;
+                }
                 QSound chave("../cg-maze-src/Key.wav");
-
                 chave.play();
-                map->setObject(x,y,0);
-                numChavesNaMao++;
+                map->setObject(x,y,0);  //retira a chave
+                ui->lcdNumber->display(lcdString[++numChavesNaMao]);
+            }
 
-                ui->lcdNumber->display(lcdString[numChavesNaMao]);
-
-                glDisable(GL_FOG);
-
-             }
             if (c.object == 14){ //agua
+                if (!hasFog){
+                    glEnable(GL_FOG);   //em cima da água há nevoeiro
+                    botaoNevoeiroEnabled();
+                    hasFog = true;
+                }
 
-
-                glEnable(GL_FOG);
-
+                //para alternar os sons de passos na água
                 if (repAgua%4==0) {
                     QSound::play("../cg-maze-src/water_step_1.wav");
                 }
@@ -302,9 +306,6 @@ void MainWindow::moveFwd()
                 else {
                     QSound::play("../cg-maze-src/water_step_4.wav");
                 }
-
-
-
              }
 
 
@@ -312,8 +313,11 @@ void MainWindow::moveFwd()
         }
         //chao sem objecto
         else {
-
-            glDisable(GL_FOG);
+            if (hasFog){
+                glDisable(GL_FOG);
+                botaoNevoeiroDisabled();
+                hasFog = false;
+            }
 
             if (repChao%2==0) {
                 repChao++;
@@ -324,16 +328,16 @@ void MainWindow::moveFwd()
                 QSound::play("../cg-maze-src/wood_step_2.wav");
             }
 
-
         }
 
 	}
 
-    //se for parede, fazer som de parede
+    //se for parede
     else {
 
-        static int repParede;
 
+
+        //parede com objecto
         if (c.hasObject() ){
             switch (c.object){
             case 7: QSound::play("../cg-maze-src/Paulo.wav");
@@ -346,8 +350,12 @@ void MainWindow::moveFwd()
                 break;
             case 11: QSound::play("../cg-maze-src/Pedro.wav");
                 break;
+            case 15: QSound::play("../cg-maze-src/Special_Object.wav");
+                map->setObject(x,y,16);
+                break;
             }
-        }
+        }        
+        //parede sem objecto
         else if (repParede%2 ==0){
             repParede++;
             QSound::play("../cg-maze-src/wall_impact_1.wav");
@@ -438,6 +446,18 @@ void MainWindow::on_pushTurnRight3D_clicked()
     draw3d( true );  // Animar esta accao
 }
 
+void MainWindow::on_tipoNevoeiro_clicked()
+{
+    static int tipo =-1;
+    GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR };
+    if (++tipo >2)
+        tipo=0;
+
+    glFogi(GL_FOG_MODE, fogMode[tipo]);	// Fog Mode
+    draw3d( true );  // Animar esta accao
+
+}
+
 
 /* Metodo invocado quando trocamos de separador
 */
@@ -471,4 +491,16 @@ void MainWindow::on_tabSet_currentChanged( int index )
 void MainWindow::on_pushNew_clicked()
 {
     requestNewMaze();
+}
+
+
+//******nosso, para desligar a visibilidade do mudar nevoeiro
+void MainWindow::botaoNevoeiroEnabled()
+{
+    ui->tipoNevoeiro->setEnabled(true);
+}
+
+void MainWindow::botaoNevoeiroDisabled()
+{
+    ui->tipoNevoeiro->setEnabled(false);
 }

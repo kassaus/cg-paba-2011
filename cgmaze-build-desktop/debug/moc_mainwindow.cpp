@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri 1. Jul 13:01:18 2011
+** Created: Fri 1. Jul 19:31:53 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,6 +39,9 @@ static const uint qt_meta_data_MainWindow[] = {
      152,   11,   11,   11, 0x08,
      186,  180,   11,   11, 0x08,
      216,   11,   11,   11, 0x08,
+     237,   11,   11,   11, 0x08,
+     263,   11,   11,   11, 0x08,
+     286,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -51,7 +54,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_pushMoveFwd2D_clicked()\0"
     "on_pushTurnLeft2D_clicked()\0index\0"
     "on_tabSet_currentChanged(int)\0"
-    "on_pushNew_clicked()\0"
+    "on_pushNew_clicked()\0on_tipoNevoeiro_clicked()\0"
+    "botaoNevoeiroEnabled()\0botaoNevoeiroDisabled()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -91,9 +95,12 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 5: on_pushTurnLeft2D_clicked(); break;
         case 6: on_tabSet_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 7: on_pushNew_clicked(); break;
+        case 8: on_tipoNevoeiro_clicked(); break;
+        case 9: botaoNevoeiroEnabled(); break;
+        case 10: botaoNevoeiroDisabled(); break;
         default: ;
         }
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }

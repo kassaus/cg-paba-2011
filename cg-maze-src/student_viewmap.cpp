@@ -39,9 +39,6 @@ ViewMap::ViewMap( int map_width, int map_height )
          doFlush = true;
 
 
-
-
-
     // Inicializar OpenGL
 
         glShadeModel( GL_SMOOTH );
@@ -69,6 +66,10 @@ ViewMap::ViewMap( int map_width, int map_height )
 */
 void ViewMap::resize( int view_width, int view_height )
 {
+    //garantir que a janela tem pelo menos 1 ponto, evitar divisões por zero
+    view_width = view_width ? view_width : 1;
+    view_height = view_height ? view_height : 1;
+
     glViewport(0, 0, view_width, view_height);
     glClear( GL_COLOR_BUFFER_BIT );
 
@@ -81,11 +82,10 @@ void ViewMap::paint()
 {
     /*
     dicas do professor
-
     o paint com argumentos tem de guardar o que já foi feito
     guardar matriz
                 x, y, cell
-*/
+    */
 
     int x;
     int y;
@@ -93,7 +93,6 @@ void ViewMap::paint()
     doFlush = false;
 
     for (x=0; x < map_width; x++){
-
         for (y=0; y <map_height; y++){
             paint( x, y, mapStore[x][y] );
         }
@@ -129,8 +128,7 @@ void ViewMap::paint( int x, int y, Cell c )
 
     if(c.isWall())
         glColor3ub( VIEWMAP_COLOR_3UB_WALL );
-
-    if(c.isFloor())
+    else if(c.isFloor())
         glColor3ub( VIEWMAP_COLOR_3UB_FLOOR );
 
     if(c.players !=0)

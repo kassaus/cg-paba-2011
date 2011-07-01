@@ -31,6 +31,8 @@ Computer Graphics Maze.
 
 #define VIEWMAP_COLOR_3UB_PLAYER1POS  0x00, 0xff, 0x00 //***nosso, para apresentar o local do player
 
+
+//************nosso, para guardar a posição actual do jogador
 extern int playerX, playerY;
 
 class ViewMap
@@ -42,7 +44,8 @@ private:
 
 public:
 
-    Cell mapStore[1000][1000]; //para guardar o mapa
+    Cell mapStore[1000][1000]; //*****nosso, para guardar o mapa
+
     bool doFlush ;   //para não fazer flush sem razão no paint
 
     ViewMap( int map_width, int map_height );

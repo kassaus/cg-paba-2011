@@ -131,7 +131,7 @@ void Map::setPlayer( int x, int y, unsigned int player )
     c.players |= player;  // Assegurar-me que so' vou alterar os bits dos jogadores
     writeCell( x, y, c, false );  // Nao fazer animacao ao alterar os jogadores
 
-    //gravar a posição do jogador  *****nosso
+    //*****nosso,gravar a posição do jogador
     playerX =x;
     playerY =y;
 

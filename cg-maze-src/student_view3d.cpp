@@ -24,7 +24,6 @@ Computer Graphics Maze.
 #include "student_view3d.h"
 #include "map.h"
 #include "compass.h"
-
 #include "student_viewmap.h"
 
 
@@ -41,19 +40,34 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
         this->map = map;
 
-//    if (map!=NULL){
-//        this->map = map;
-//    } else {
-//        //ver se temos de fazer clear
-//        return;
-//    }
+    if (map!=NULL){
+        this->map = map;
+    } else {
+        //ver se temos de fazer clear
+        return;
+    }
 
 
 
-      //inicializar a iluminação
-        GLfloat LightAmbient1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
-        GLfloat LightDiffuse1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
-        GLfloat LightSpecular1[]={ 0.9f, 0.9f, 0.9f, 1.0f };
+  //inicializar a iluminação
+    GLfloat LightAmbient1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
+    GLfloat LightDiffuse1[]= { 0.9f, 0.9f, 0.9f, 1.0f };
+    GLfloat LightSpecular1[]={ 0.9f, 0.9f, 0.9f, 1.0f };
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular1);
+
+
+    //inicializar o nevoeiro
+    GLfloat fogColor[4]= {0.4f, 0.4f, 0.4f, 1.0f};
+    glClearColor(0.4f,0.4f,0.4f,1.0f);
+    glFogi(GL_FOG_MODE, GL_LINEAR);                     // por defeito em LINEAR
+    glFogfv(GL_FOG_COLOR, fogColor);
+    glFogf(GL_FOG_DENSITY, 0.35f);
+    glHint(GL_FOG_HINT, GL_DONT_CARE);
+    glFogf(GL_FOG_START, 1.0f);
+    glFogf(GL_FOG_END, 5.0f);
 
 
 
@@ -89,10 +103,6 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
 
 
 
-    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular1);
-
 
 
 }
@@ -105,9 +115,6 @@ View3D::View3D( Map *map, const QImage textures[VIEW3D_TEXTURES_NUMBER] )
    jogo (ve^ glViewport()).
    Tambem e' chamado no arranque, logo apos o construtor.
    Atencao que "this->map" pode ser NULL!
-
-
-   o gluPerspective faz-se aqui!
 
 */
 void View3D::resize( int view_width, int view_height )
@@ -125,9 +132,9 @@ void View3D::resize( int view_width, int view_height )
         //para o frustrum de perspectiva
         float altura = map->getHeight();
         float largura = map->getWidth();
-        float profMax = (altura > largura) ? altura+1 : largura+1;
+        float profMax = (altura > largura) ? altura : largura;
 
-        gluPerspective( 45.0f,(GLfloat)view_width/(GLfloat)view_height ,0.1f , profMax);
+        gluPerspective( 55.0f,(GLfloat)view_width/(GLfloat)view_height ,0.1f , profMax);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -145,7 +152,6 @@ void View3D::resize( int view_width, int view_height )
 void View3D::paint( float x, float y, float compass_direction )
 {
 
-
     /* passar o compass_direction para um angulo em Radianos
             passar o compass_direction para um angulo em relação ao eixo x
             transformá-lo em radianos
@@ -161,7 +167,6 @@ void View3D::paint( float x, float y, float compass_direction )
 
     //iluminação
 //        GLfloat LightPosition[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 1.0f };
-
  //   GLfloat LightPosition1[]= { (x + 0.5f - (xview * 0.5f)),(y + 0.5f - (yview * 0.5f)), 0.5f, 0.0f };
 
     GLfloat LightPosition1[]= { map->getWidth() /2 , map->getHeight() /2, 100.0f, 0.0f };
@@ -169,12 +174,8 @@ void View3D::paint( float x, float y, float compass_direction )
               GL_POSITION,
               LightPosition1);
 
-
     glEnable(GL_LIGHT1);
     glEnable(GL_LIGHTING);
-
-
-
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -214,8 +215,6 @@ void View3D::paint( float x, float y, float compass_direction )
         paintIntervalos(x-2, y+5 , x+2 , paredeYmax);
     }
 
-
-
     if ( !(compass_direction >=1.5 && compass_direction <=2.5) ){
         //procura parede para SUL
         do {
@@ -226,7 +225,6 @@ void View3D::paint( float x, float y, float compass_direction )
         //paint SUL
         paintIntervalos(x-2 , paredeYmin , x+2 , y -5);
     }
-
 
     if ( !(compass_direction >=0.5 && compass_direction <=1.5) ){
         //procura parede para ESTE
@@ -275,22 +273,21 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
     int my;
 
 
+//    //fog
+//    GLuint filter;						// Which Filter To Use
+//    GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR };	// Storage For Three Types Of Fog
+//    GLuint fogfilter= 0;					// Which Fog To Use
+//    GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f};		// Fog Color
+//    glClearColor(0.5f,0.5f,0.5f,1.0f);			// We'll Clear To The Color Of The Fog ( Modified )
 
-    //fog
-    GLuint filter;						// Which Filter To Use
-    GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR };	// Storage For Three Types Of Fog
-    GLuint fogfilter= 0;					// Which Fog To Use
-    GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f};		// Fog Color
-    glClearColor(0.5f,0.5f,0.5f,1.0f);			// We'll Clear To The Color Of The Fog ( Modified )
-
-//    glFogi(GL_FOG_MODE, fogMode[fogfilter]);		// Fog Mode
-        glFogi(GL_FOG_MODE, fogMode[GL_EXP2]);		// Fog Mode
-    glFogfv(GL_FOG_COLOR, fogColor);			// Set Fog Color
-    glFogf(GL_FOG_DENSITY, 0.35f);				// How Dense Will The Fog Be
-    glHint(GL_FOG_HINT, GL_DONT_CARE);			// Fog Hint Value
-    glFogf(GL_FOG_START, 1.0f);				// Fog Start Depth
-    glFogf(GL_FOG_END, 5.0f);				// Fog End Depth
-/*    glEnable(GL_FOG);	*/				// Enables GL_FOG
+////    glFogi(GL_FOG_MODE, fogMode[fogfilter]);		// Fog Mode
+//        glFogi(GL_FOG_MODE, fogMode[GL_EXP2]);		// Fog Mode
+//    glFogfv(GL_FOG_COLOR, fogColor);			// Set Fog Color
+//    glFogf(GL_FOG_DENSITY, 0.35f);				// How Dense Will The Fog Be
+//    glHint(GL_FOG_HINT, GL_DONT_CARE);			// Fog Hint Value
+//    glFogf(GL_FOG_START, 1.0f);				// Fog Start Depth
+//    glFogf(GL_FOG_END, 5.0f);				// Fog End Depth
+///*    glEnable(GL_FOG);	*/				// Enables GL_FOG
 
 
 
@@ -315,7 +312,6 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
             if (celula.isDoor())
                 paintParede(mx, my, celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_DOOR_OPEN);
             else {
-//                paintChao(mx, my, (celula.hasObject()? (int)celula.object : VIEW3D_IX_TEXTURE_FLOOR) , VIEW3D_IX_TEXTURE_CEILING);
                 paintChao(mx, my,VIEW3D_IX_TEXTURE_FLOOR , VIEW3D_IX_TEXTURE_CEILING);
 
                 if (celula.hasObject() && (int)celula.object==VIEW3D_IX_TEXTURE_CHAVE){
@@ -357,16 +353,6 @@ void View3D::paintIntervalos( float xMin, float yMin, float xMax, float yMax )
 
             }
         }
-//        else if(celula.isDoor()){
-//            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-//        }
-         //ter cuidado  que se for uma porta, estamos ainda apenas a desenhar parede, e não chão
-
-
-
-//        else if (celula.isWallOrClosed()){
-//            paintParede(mx, my, VIEW3D_IX_TEXTURE_WALL);
-//        }
 
 }
 
@@ -461,8 +447,6 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
     int z = 0; //apenas se quizermos alterar a "altura"
 
     //cima, textura virada para baixo
-
-//    glEnable(GL_FOG);
     glBindTexture(GL_TEXTURE_2D, id_textures[texturaCima]);
 
     glBegin(GL_QUADS);
@@ -477,7 +461,6 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
     //baixo, textura virada para cima
 
     glBindTexture(GL_TEXTURE_2D, id_textures[texturaBaixo]);
-
     glBegin(GL_QUADS);
        glNormal3i( 0, 0, 1);
         glTexCoord2i(0, 0); glVertex3i( x + 0, y + 0, z + 0);
@@ -485,7 +468,7 @@ void View3D::paintChao(int x, int y, GLuint texturaBaixo, GLuint texturaCima)
         glTexCoord2i(1, 1); glVertex3i( x + 1, y + 1, z + 0);
         glTexCoord2i(0, 1); glVertex3i( x + 0, y + 1, z + 0);
     glEnd();
-//    glDisable(GL_FOG);
+
 
 }
 
